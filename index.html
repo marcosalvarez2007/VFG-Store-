@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Store Valentino</title>
+<title>VFG Store</title>
 
 <style>
 *{
@@ -14,43 +14,66 @@
 
 body{
     font-family: 'Segoe UI', sans-serif;
-    background:#f5f5f5;
-    color:#111;
+    background:#000;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ANIMACIÓN SUAVE DE ENTRADA */
+.fade-in{
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 /* HEADER */
 header{
-    background:black;
-    color:white;
-    padding:25px 0;
     text-align:center;
+    padding:40px 20px 20px;
+}
+
+/* LOGO CAMUFLADO */
+.logo img{
+    width:220px;
+    max-width:80%;
+    opacity:0.9;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.15));
+    transition:0.4s ease;
+}
+
+.logo img:hover{
+    transform:scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
 }
 
 header h1{
-    font-size:32px;
-    letter-spacing:1px;
+    margin-top:20px;
+    font-size:28px;
+    letter-spacing:2px;
 }
 
 header p{
-    font-size:14px;
-    opacity:0.7;
+    opacity:0.6;
     margin-top:5px;
 }
 
 /* CONTENEDOR */
 .container{
     width:90%;
-    max-width:1000px;
+    max-width:1100px;
     margin:40px auto;
 }
 
-/* TITULOS DE SECCION */
+/* TITULOS */
 .section-title{
     font-size:20px;
-    margin:40px 0 20px;
-    font-weight:600;
-    border-left:4px solid black;
+    margin:50px 0 20px;
+    border-left:4px solid white;
     padding-left:10px;
+    opacity:0.9;
 }
 
 /* GRID */
@@ -62,25 +85,27 @@ header p{
 
 /* TARJETAS */
 .card{
-    background:white;
+    background:#111;
     padding:25px;
     border-radius:14px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    border:1px solid #222;
     transition:0.3s ease;
+    animation:fadeIn 0.8s ease forwards;
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    transform:translateY(-6px);
+    border:1px solid #444;
+    box-shadow:0 10px 30px rgba(255,255,255,0.08);
 }
 
 .card h3{
-    font-size:18px;
+    font-size:17px;
     margin-bottom:10px;
 }
 
 .price{
-    font-size:22px;
+    font-size:20px;
     font-weight:bold;
     margin-bottom:15px;
 }
@@ -90,15 +115,15 @@ button{
     padding:10px;
     border:none;
     border-radius:8px;
-    background:black;
-    color:white;
+    background:white;
+    color:black;
     font-weight:600;
     cursor:pointer;
     transition:0.3s;
 }
 
 button:hover{
-    background:#333;
+    background:#ccc;
 }
 
 /* MODAL */
@@ -109,27 +134,19 @@ button:hover{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.6);
+    background:rgba(0,0,0,0.8);
     justify-content:center;
     align-items:center;
 }
 
 .modal-content{
-    background:white;
+    background:#111;
     padding:30px;
     border-radius:14px;
     width:90%;
     max-width:400px;
-    animation:fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn{
-    from{transform:scale(0.9);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
-.modal-content h3{
-    margin-bottom:15px;
+    border:1px solid #333;
+    animation:fadeIn 0.3s ease;
 }
 
 input, select{
@@ -137,27 +154,44 @@ input, select{
     padding:10px;
     margin-top:10px;
     border-radius:6px;
-    border:1px solid #ddd;
+    border:1px solid #333;
+    background:#000;
+    color:white;
 }
 
 .close{
     text-align:right;
-    font-weight:bold;
     cursor:pointer;
     margin-bottom:10px;
+    color:#aaa;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1>STORE VALENTINO</h1>
+<header class="fade-in">
+    <div class="logo">
+        <img src="logo.png" alt="VFG Store Logo">
+    </div>
+    <h1>VFG STORE</h1>
     <p>Diamantes y Extras - Entrega Rápida</p>
 </header>
 
-<div class="container">
+<div class="container fade-in">
 
+<!-- PRECIOS NORMALES -->
+<div class="section-title">Precios Normales 🍀</div>
+<div class="grid">
+<div class="card"><h3>110 💎</h3><div class="price">$1500 ARS</div><button onclick="abrirModal('110 💎 Normal','1500')">Comprar</button></div>
+<div class="card"><h3>341 💎</h3><div class="price">$5000 ARS</div><button onclick="abrirModal('341 💎 Normal','5000')">Comprar</button></div>
+<div class="card"><h3>572 💎</h3><div class="price">$7000 ARS</div><button onclick="abrirModal('572 💎 Normal','7000')">Comprar</button></div>
+<div class="card"><h3>1166 💎</h3><div class="price">$13000 ARS</div><button onclick="abrirModal('1166 💎 Normal','13000')">Comprar</button></div>
+<div class="card"><h3>2398 💎</h3><div class="price">$25000 ARS</div><button onclick="abrirModal('2398 💎 Normal','25000')">Comprar</button></div>
+<div class="card"><h3>6160 💎</h3><div class="price">$70000 ARS</div><button onclick="abrirModal('6160 💎 Normal','70000')">Comprar</button></div>
+</div>
+
+<!-- PRECIOS STOCK -->
 <div class="section-title">Precios de Stock ⚡</div>
 <div class="grid">
 <div class="card"><h3>110 💎</h3><div class="price">$1200 ARS</div><button onclick="abrirModal('110 💎 Stock','1200')">Comprar</button></div>
@@ -168,15 +202,6 @@ input, select{
 <div class="card"><h3>6160 💎</h3><div class="price">$55000 ARS</div><button onclick="abrirModal('6160 💎 Stock','55000')">Comprar</button></div>
 </div>
 
-<div class="section-title">Extras 🌟</div>
-<div class="grid">
-<div class="card"><h3>Tarjeta Semanal</h3><div class="price">$3450 ARS</div><button onclick="abrirModal('Tarjeta Semanal','3450')">Comprar</button></div>
-<div class="card"><h3>Tarjeta Mensual</h3><div class="price">$13500 ARS</div><button onclick="abrirModal('Tarjeta Mensual','13500')">Comprar</button></div>
-<div class="card"><h3>Evo Pass 7 días</h3><div class="price">$2000 ARS</div><button onclick="abrirModal('Evo Pass 7 días','2000')">Comprar</button></div>
-<div class="card"><h3>Evo Pass 30 días</h3><div class="price">$5500 ARS</div><button onclick="abrirModal('Evo Pass 30 días','5500')">Comprar</button></div>
-<div class="card"><h3>Pase Nivel Completo</h3><div class="price">$6500 ARS</div><button onclick="abrirModal('Pase Nivel Completo','6500')">Comprar</button></div>
-</div>
-
 </div>
 
 <!-- MODAL -->
@@ -185,7 +210,6 @@ input, select{
 <div class="close" onclick="cerrarModal()">X</div>
 <h3>Finalizar Pedido</h3>
 <p id="productoSeleccionado"></p>
-
 <input type="text" id="playerID" placeholder="Ingrese ID del jugador">
 <select id="metodoPago">
 <option value="">Seleccione método de pago</option>
@@ -193,7 +217,6 @@ input, select{
 <option>Mercado Pago</option>
 <option>USDT</option>
 </select>
-
 <button onclick="enviarPedido()">Enviar Pedido</button>
 </div>
 </div>
