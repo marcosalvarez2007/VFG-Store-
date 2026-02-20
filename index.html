@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store Valentino</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background:#f5f5f5;
+    color:#111;
+}
+
+/* HEADER */
+header{
+    background:black;
+    color:white;
+    padding:25px 0;
+    text-align:center;
+}
+
+header h1{
+    font-size:32px;
+    letter-spacing:1px;
+}
+
+header p{
+    font-size:14px;
+    opacity:0.7;
+    margin-top:5px;
+}
+
+/* CONTENEDOR */
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:40px auto;
+}
+
+/* TITULOS DE SECCION */
+.section-title{
+    font-size:20px;
+    margin:40px 0 20px;
+    font-weight:600;
+    border-left:4px solid black;
+    padding-left:10px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+/* TARJETAS */
+.card{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    transition:0.3s ease;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card h3{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.price{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:black;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#333;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    width:90%;
+    max-width:400px;
+    animation:fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn{
+    from{transform:scale(0.9);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+.modal-content h3{
+    margin-bottom:15px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+}
+
+.close{
+    text-align:right;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>STORE VALENTINO</h1>
+    <p>Diamantes y Extras - Entrega Rápida</p>
+</header>
+
+<div class="container">
+
+<div class="section-title">Precios de Stock ⚡</div>
+<div class="grid">
+<div class="card"><h3>110 💎</h3><div class="price">$1200 ARS</div><button onclick="abrirModal('110 💎 Stock','1200')">Comprar</button></div>
+<div class="card"><h3>341 💎</h3><div class="price">$3800 ARS</div><button onclick="abrirModal('341 💎 Stock','3800')">Comprar</button></div>
+<div class="card"><h3>572 💎</h3><div class="price">$5800 ARS</div><button onclick="abrirModal('572 💎 Stock','5800')">Comprar</button></div>
+<div class="card"><h3>1166 💎</h3><div class="price">$11000 ARS</div><button onclick="abrirModal('1166 💎 Stock','11000')">Comprar</button></div>
+<div class="card"><h3>2398 💎</h3><div class="price">$21000 ARS</div><button onclick="abrirModal('2398 💎 Stock','21000')">Comprar</button></div>
+<div class="card"><h3>6160 💎</h3><div class="price">$55000 ARS</div><button onclick="abrirModal('6160 💎 Stock','55000')">Comprar</button></div>
+</div>
+
+<div class="section-title">Extras 🌟</div>
+<div class="grid">
+<div class="card"><h3>Tarjeta Semanal</h3><div class="price">$3450 ARS</div><button onclick="abrirModal('Tarjeta Semanal','3450')">Comprar</button></div>
+<div class="card"><h3>Tarjeta Mensual</h3><div class="price">$13500 ARS</div><button onclick="abrirModal('Tarjeta Mensual','13500')">Comprar</button></div>
+<div class="card"><h3>Evo Pass 7 días</h3><div class="price">$2000 ARS</div><button onclick="abrirModal('Evo Pass 7 días','2000')">Comprar</button></div>
+<div class="card"><h3>Evo Pass 30 días</h3><div class="price">$5500 ARS</div><button onclick="abrirModal('Evo Pass 30 días','5500')">Comprar</button></div>
+<div class="card"><h3>Pase Nivel Completo</h3><div class="price">$6500 ARS</div><button onclick="abrirModal('Pase Nivel Completo','6500')">Comprar</button></div>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<div class="close" onclick="cerrarModal()">X</div>
+<h3>Finalizar Pedido</h3>
+<p id="productoSeleccionado"></p>
+
+<input type="text" id="playerID" placeholder="Ingrese ID del jugador">
+<select id="metodoPago">
+<option value="">Seleccione método de pago</option>
+<option>Transferencia</option>
+<option>Mercado Pago</option>
+<option>USDT</option>
+</select>
+
+<button onclick="enviarPedido()">Enviar Pedido</button>
+</div>
+</div>
+
+<script>
+let producto="";
+let precio="";
+
+function abrirModal(prod,pre){
+producto=prod;
+precio=pre;
+document.getElementById("productoSeleccionado").innerHTML=
+"<strong>Producto:</strong> "+prod+"<br><strong>Precio:</strong> $"+pre+" ARS";
+document.getElementById("modal").style.display="flex";
+}
+
+function cerrarModal(){
+document.getElementById("modal").style.display="none";
+}
+
+function enviarPedido(){
+let id=document.getElementById("playerID").value;
+let metodo=document.getElementById("metodoPago").value;
+
+if(id===""||metodo===""){
+alert("Complete todos los campos");
+return;
+}
+
+let mensaje=
+"🛒 NUEVO PEDIDO\n"+
+"━━━━━━━━━━━━━━\n"+
+"💎 Producto: "+producto+"\n"+
+"💵 Precio: $"+precio+" ARS\n"+
+"🆔 ID: "+id+"\n"+
+"💳 Pago: "+metodo;
+
+let numero="5493435440092";
+let url="https://wa.me/"+numero+"?text="+encodeURIComponent(mensaje);
+
+window.open(url,'_blank');
+}
+</script>
+
+</body>
+</html>
