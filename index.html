@@ -7,180 +7,230 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family: 'Segoe UI', sans-serif;
-    background:#000;
-    color:white;
-    overflow-x:hidden;
+font-family:'Segoe UI',sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
 }
 
-/* ANIMACIÓN SUAVE DE ENTRADA */
-.fade-in{
-    animation: fadeIn 1s ease forwards;
+/* ================= POPUP ================= */
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.popup-box{
+position:relative;
+max-width:500px;
+width:90%;
+animation:fadeIn 0.4s ease;
+}
+
+.popup-box img{
+width:100%;
+border-radius:15px;
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+.cerrar-popup{
+position:absolute;
+top:8px;
+right:12px;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+transition:0.3s;
+}
+
+.cerrar-popup:hover{
+color:red;
+transform:scale(1.2);
+}
+/* ========================================= */
+
+/* Animaciones */
+.fade{
+animation:fadeIn 1s ease forwards;
 }
 
 @keyframes fadeIn{
-    from{opacity:0; transform:translateY(20px);}
-    to{opacity:1; transform:translateY(0);}
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 /* HEADER */
 header{
-    text-align:center;
-    padding:40px 20px 20px;
+text-align:center;
+padding:50px 20px 20px;
 }
 
-/* LOGO CAMUFLADO */
 .logo img{
-    width:220px;
-    max-width:80%;
-    opacity:0.9;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.15));
-    transition:0.4s ease;
+width:220px;
+max-width:80%;
+opacity:0.95;
+filter:drop-shadow(0 0 12px rgba(255,255,255,0.2));
+transition:0.4s;
 }
 
 .logo img:hover{
-    transform:scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
+transform:scale(1.05);
+filter:drop-shadow(0 0 25px rgba(255,255,255,0.4));
 }
 
 header h1{
-    margin-top:20px;
-    font-size:28px;
-    letter-spacing:2px;
+margin-top:20px;
+font-size:28px;
+letter-spacing:2px;
 }
 
 header p{
-    opacity:0.6;
-    margin-top:5px;
+opacity:0.6;
+margin-top:5px;
 }
 
 /* CONTENEDOR */
 .container{
-    width:90%;
-    max-width:1100px;
-    margin:40px auto;
+width:90%;
+max-width:1100px;
+margin:40px auto;
 }
 
 /* TITULOS */
 .section-title{
-    font-size:20px;
-    margin:50px 0 20px;
-    border-left:4px solid white;
-    padding-left:10px;
-    opacity:0.9;
+font-size:20px;
+margin:60px 0 20px;
+border-left:4px solid #fff;
+padding-left:12px;
+opacity:0.9;
 }
 
 /* GRID */
 .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
 }
 
 /* TARJETAS */
 .card{
-    background:#111;
-    padding:25px;
-    border-radius:14px;
-    border:1px solid #222;
-    transition:0.3s ease;
-    animation:fadeIn 0.8s ease forwards;
+background:#111;
+padding:25px;
+border-radius:15px;
+border:1px solid #222;
+transition:0.3s ease;
 }
 
 .card:hover{
-    transform:translateY(-6px);
-    border:1px solid #444;
-    box-shadow:0 10px 30px rgba(255,255,255,0.08);
+transform:translateY(-6px);
+border:1px solid #444;
+box-shadow:0 10px 30px rgba(255,255,255,0.07);
 }
 
 .card h3{
-    font-size:17px;
-    margin-bottom:10px;
+font-size:17px;
+margin-bottom:10px;
 }
 
 .price{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:15px;
+font-size:20px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    background:white;
-    color:black;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#fff;
+color:#000;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-    background:#ccc;
+background:#ccc;
 }
 
 /* MODAL */
 .modal{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.8);
-    justify-content:center;
-    align-items:center;
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
+z-index:9999;
 }
 
 .modal-content{
-    background:#111;
-    padding:30px;
-    border-radius:14px;
-    width:90%;
-    max-width:400px;
-    border:1px solid #333;
-    animation:fadeIn 0.3s ease;
+background:#111;
+padding:30px;
+border-radius:14px;
+width:90%;
+max-width:400px;
+border:1px solid #333;
+animation:fadeIn 0.3s ease;
 }
 
 input, select{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border-radius:6px;
-    border:1px solid #333;
-    background:#000;
-    color:white;
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #333;
+background:#000;
+color:white;
 }
 
 .close{
-    text-align:right;
-    cursor:pointer;
-    margin-bottom:10px;
-    color:#aaa;
+text-align:right;
+cursor:pointer;
+margin-bottom:10px;
+color:#aaa;
 }
 </style>
 </head>
 
 <body>
 
-<header class="fade-in">
-    <div class="logo">
-        <img src="logo.png" alt="VFG Store Logo">
-    </div>
-    <h1>VFG STORE</h1>
-    <p>Diamantes y Extras - Entrega Rápida</p>
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-box">
+<span class="cerrar-popup" onclick="cerrarPopup()">✖</span>
+<img src="promo.jpg" alt="VFG Store Promo">
+</div>
+</div>
+
+<header class="fade">
+<div class="logo">
+<img src="logo.png" alt="VFG Store Logo">
+</div>
+<h1>VFG STORE</h1>
+<p>Diamantes y Extras - Entrega Rápida</p>
 </header>
 
-<div class="container fade-in">
+<div class="container fade">
 
-<!-- PRECIOS NORMALES -->
 <div class="section-title">Precios Normales 🍀</div>
 <div class="grid">
 <div class="card"><h3>110 💎</h3><div class="price">$1500 ARS</div><button onclick="abrirModal('110 💎 Normal','1500')">Comprar</button></div>
@@ -191,7 +241,6 @@ input, select{
 <div class="card"><h3>6160 💎</h3><div class="price">$70000 ARS</div><button onclick="abrirModal('6160 💎 Normal','70000')">Comprar</button></div>
 </div>
 
-<!-- PRECIOS STOCK -->
 <div class="section-title">Precios de Stock ⚡</div>
 <div class="grid">
 <div class="card"><h3>110 💎</h3><div class="price">$1200 ARS</div><button onclick="abrirModal('110 💎 Stock','1200')">Comprar</button></div>
@@ -200,6 +249,13 @@ input, select{
 <div class="card"><h3>1166 💎</h3><div class="price">$11000 ARS</div><button onclick="abrirModal('1166 💎 Stock','11000')">Comprar</button></div>
 <div class="card"><h3>2398 💎</h3><div class="price">$21000 ARS</div><button onclick="abrirModal('2398 💎 Stock','21000')">Comprar</button></div>
 <div class="card"><h3>6160 💎</h3><div class="price">$55000 ARS</div><button onclick="abrirModal('6160 💎 Stock','55000')">Comprar</button></div>
+</div>
+
+<div class="section-title">Extras 🌟</div>
+<div class="grid">
+<div class="card"><h3>Tarjeta Semanal</h3><div class="price">$3450 ARS</div><button onclick="abrirModal('Tarjeta Semanal','3450')">Comprar</button></div>
+<div class="card"><h3>Tarjeta Mensual</h3><div class="price">$13500 ARS</div><button onclick="abrirModal('Tarjeta Mensual','13500')">Comprar</button></div>
+<div class="card"><h3>Tarjeta Básica</h3><div class="price">$1000 ARS</div><button onclick="abrirModal('Tarjeta Básica','1000')">Comprar</button></div>
 </div>
 
 </div>
@@ -222,6 +278,10 @@ input, select{
 </div>
 
 <script>
+function cerrarPopup(){
+document.getElementById("popup").style.display="none";
+}
+
 let producto="";
 let precio="";
 
