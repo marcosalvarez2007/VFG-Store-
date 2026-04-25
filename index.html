@@ -10,7 +10,7 @@
     <style>
         :root {
             --bg: #020202;
-            --card: rgba(10, 10, 10, 0.7);
+            --card: rgba(10, 10, 10, 0.75);
             --accent: #00f2ff;
             --text: #ffffff;
             --text-dim: #94a3b8;
@@ -24,23 +24,23 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
+            /* MEJORA DE SCROLL WALLPAPER */
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            /* TRANSICIÓN RÁPIDA: 0.3 segundos */
-            transition: background 0.3s ease-in-out; 
+            transition: background 0.4s ease-in-out; 
             position: relative;
         }
 
-        /* Capa de oscurecimiento */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+            background: linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.85) 100%);
             z-index: -1;
         }
 
@@ -102,7 +102,7 @@
             display: flex; flex-direction: column; justify-content: space-between;
             backdrop-filter: blur(12px);
         }
-        .card:hover { border-color: var(--item-color); transform: translateY(-5px); }
+        .card:hover { border-color: var(--item-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
         .item-badge { 
             font-size: 0.65rem; font-weight: 800; color: #000; background: var(--item-color); 
@@ -191,48 +191,60 @@
                 t: "Free Fire", d: "Cargas por ID oficiales", icon: "fa-solid fa-fire", color: "#ff8c00",
                 img: "fre.jpg",
                 rows: [
-                    { n: "Stock por ID ✨", ph: "ID Jugador", items: [["100💎", "1.100"], ["341💎", "3.300"], ["572💎", "5.300"]] }
+                    { n: "Stock por ID ✨", ph: "ID Jugador", items: [["100💎", "1.100"], ["341💎", "3.300"], ["572💎", "5.300"], ["1.166💎", "10.300"], ["2.398💎", "20.300"], ["6.160💎", "55.000"]] },
+                    { n: "Diamantes Infinitos ", ph: "ID Jugador", items: [["110💎", "1.450"], ["341💎", "5.000"], ["572💎", "7.000"], ["1166💎", "12.680"], ["6160💎", "60.000"]] },
+                    { n: "Extras", ph: "ID Jugador", items: [["Pase Booyah", "3.500"]] }
                 ]
             },
             roblox: {
                 t: "Roblox", d: "Robux via Gamepass", icon: "fa-solid fa-cube", color: "#f0f0f0",
                 img: "https://wallpapercave.com/wp/wp4013149.jpg",
-                rows: [{ n: "Cargas", ph: "Usuario", items: [["100 Robux", "1.500"], ["400 Robux", "5.000"]] }]
+                rows: [{ n: "Cargas", ph: "Usuario", items: [
+                    ["100 Robux", "1.250"], 
+                    ["300 Robux", "3.750"], 
+                    ["500 Robux", "6.300"], 
+                    ["1.000 Robux", "12.500"], 
+                    ["2.000 Robux", "25.000"], 
+                    ["4.000 Robux", "50.000"]] 
+                }]
             },
             bs: {
                 t: "Block Strike", d: "Oro oficial", icon: "fa-solid fa-gun", color: "#3b82f6",
                 img: "blok.png",
-                rows: [{ n: "Oro", ph: "ID de BS", items: [["100 Oro", "1.200"]] }]
+                rows: [{ n: "Oro", ph: "ID de BS", items: [["100 Oro", "1.200"], ["500 Oro", "4.500"], ["1.000 Oro", "8.000"], ["2.500 Oro", "15.000"], ["5.000 Oro", "28.000"]] }]
             },
             ig: {
                 t: "Instagram", d: "Crecimiento Social", icon: "fa-brands fa-instagram", color: "#e1306c",
                 img: "https://wallpapercave.com/wp/wp6164215.jpg",
-                rows: [{ n: "Seguidores", ph: "Link Perfil", items: [["1k Seg", "3.500"]] }]
+                rows: [
+                    { n: "Seguidores", ph: "Link Perfil", items: [["100 Seg", "800"], ["1k Seg", "3.500"], ["10k Seg", "10.000"], ["20k Seg", "18.500"]] },
+                    { n: "Likes", ph: "Link Foto", items: [["1k Likes", "2.000"], ["5k Likes", "5.000"]] }
+                ]
             },
             tt: {
                 t: "TikTok", d: "Viraliza tu perfil", icon: "fa-brands fa-tiktok", color: "#ffffff",
                 img: "https://wallpapercave.com/wp/wp6651877.png",
-                rows: [{ n: "Social", ph: "Link Video", items: [["100k Vistas", "8.500"]] }]
+                rows: [{ n: "Social", ph: "Link Video", items: [["10k Vistas", "3.000"], ["100k Vistas", "8.500"], ["1M Vistas", "50.000"]] }]
             },
             yt: {
                 t: "YouTube", d: "Crecimiento de Canal", icon: "fa-brands fa-youtube", color: "#ff0000",
                 img: "https://wallpapercave.com/wp/wp2325493.jpg",
-                rows: [{ n: "Subs", ph: "Link Canal", items: [["100 Subs", "1.500"]] }]
+                rows: [{ n: "Subs", ph: "Link Canal", items: [["100 Subs", "1.500"], ["1k Subs", "15.000"]] }]
             },
             stream: {
                 t: "Streaming", d: "Cuentas Privadas", icon: "fa-solid fa-play", color: "#a855f7",
                 img: "https://wallpapercave.com/wp/wp3668385.jpg",
-                rows: [{ n: "Plataformas", ph: "WhatsApp", items: [["Netflix", "8.000"]] }]
+                rows: [{ n: "Plataformas", ph: "WhatsApp", items: [["Netflix", "8.000"], ["Disney+", "7.000"], ["HBO Max", "7.500"], ["Crunchyroll", "4.000"]] }]
             },
             apps: {
                 t: "Apps Pro", d: "Premium", icon: "fa-solid fa-mobile-screen", color: "#10b981",
                 img: "https://wallpapercave.com/wp/wp4522437.jpg",
-                rows: [{ n: "Suscripciones", ph: "Correo", items: [["ChatGPT Mes", "5.500"]] }]
+                rows: [{ n: "Suscripciones", ph: "Correo", items: [["Canva Año", "50.000"], ["CapCut Pro", "7.000"], ["ChatGPT Mes", "5.500"]] }]
             },
             wsp: {
                 t: "WhatsApp", d: "Miembros", icon: "fa-brands fa-whatsapp", color: "#25d366",
                 img: "https://wallpapercave.com/wp/wp7169420.jpg",
-                rows: [{ n: "Servicios", ph: "Link Canal", items: [["1k Miembros", "9.500"]] }]
+                rows: [{ n: "Servicios", ph: "Link Canal", items: [["100 Miembros", "1.500"], ["1k Miembros", "9.500"]] }]
             }
         };
 
@@ -242,15 +254,13 @@
             const app = document.getElementById('app');
             const data = DATA[id];
             
-            // Cambio de imagen inmediato (0.3s definido en CSS)
             if(data.img) {
                 document.body.style.backgroundImage = `url('${data.img}')`;
             }
 
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            if(window.event && window.event.currentTarget.classList) {
-                window.event.currentTarget.classList.add('active');
-            }
+            const currentBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.textContent.trim().toLowerCase().includes(data.t.toLowerCase()));
+            if(currentBtn) currentBtn.classList.add('active');
 
             let html = `
                 <div class="section-intro">
@@ -277,7 +287,7 @@
                 html += `</div>`;
             });
             app.innerHTML = html;
-            window.scrollTo({top: 0}); // Sin smooth para que sea más rápido
+            window.scrollTo({top: 0}); 
         }
 
         let selI, selP;
