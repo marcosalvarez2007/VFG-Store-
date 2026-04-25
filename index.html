@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VFG STORE | Elite Digital Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         :root {
             --bg: #020202;
@@ -59,21 +61,23 @@
             white-space: nowrap; transition: 0.3s; font-size: 0.8rem;
             display: flex; align-items: center; gap: 8px;
         }
+        .nav-btn i { font-size: 1rem; }
         .nav-btn.active { background: #fff; color: #000; border: none; transform: scale(1.05); }
 
         /* --- ICONO SECCIÓN --- */
         .section-icon {
-            width: 65px; height: 65px; margin: 0 auto 15px;
+            width: 70px; height: 70px; margin: 0 auto 15px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 2.2rem; border-radius: 20px;
+            font-size: 2.5rem; border-radius: 22px;
             background: var(--card); border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         /* --- CONTENIDO --- */
         main { max-width: 1200px; margin: 0 auto; padding: 40px 20px 100px; min-height: 100vh; }
         
         .section-intro { margin-bottom: 40px; text-align: center; animation: fadeIn 0.5s ease; }
-        .section-intro h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; }
+        .section-intro h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
 
         .cat-title { 
             font-size: 0.85rem; font-weight: 800; color: var(--accent); 
@@ -90,10 +94,11 @@
             display: flex; flex-direction: column; justify-content: space-between;
             position: relative; overflow: hidden;
         }
-        .card:hover { border-color: var(--item-color); transform: translateY(-8px); }
+        .card:hover { border-color: var(--item-color); transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
         .item-badge { 
-            font-size: 0.6rem; font-weight: 800; color: #000; background: var(--item-color); 
-            padding: 4px 10px; border-radius: 20px; width: fit-content; margin-bottom: 12px; text-transform: uppercase;
+            font-size: 0.65rem; font-weight: 800; color: #000; background: var(--item-color); 
+            padding: 5px 12px; border-radius: 20px; width: fit-content; margin-bottom: 12px; 
+            text-transform: uppercase; display: flex; align-items: center; gap: 6px;
         }
         .item-name { font-size: 1.1rem; font-weight: 700; color: #fff; }
         .item-price { font-size: 1.8rem; font-weight: 800; margin: 12px 0 25px; color: #fff; }
@@ -109,7 +114,8 @@
         /* --- MODAL --- */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(15px); padding: 20px; }
         .modal { background: #080808; border: 1px solid var(--border); width: 100%; max-width: 420px; padding: 35px; border-radius: 30px; }
-        input, select { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px; background: #121212; border: 1px solid var(--border); color: #fff; }
+        input, select { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px; background: #121212; border: 1px solid var(--border); color: #fff; outline: none; }
+        input:focus { border-color: var(--accent); }
         .confirm-btn { width: 100%; padding: 18px; border-radius: 14px; background: var(--grad); color: #fff; font-weight: 800; border: none; cursor: pointer; }
 
         /* --- ANIMACIONES --- */
@@ -137,16 +143,16 @@
         <div class="nav-container">
             <div class="logo">VFG STORE</div>
             <div class="menu-scroll">
-                <button class="nav-btn active" onclick="render('home')">🏠 Inicio</button>
-                <button class="nav-btn" onclick="render('ff')">💎 Free Fire</button>
-                <button class="nav-btn" onclick="render('roblox')">🚀 Roblox</button>
-                <button class="nav-btn" onclick="render('bs')">🔫 Block Strike</button>
-                <button class="nav-btn" onclick="render('ig')">📸 Instagram</button>
-                <button class="nav-btn" onclick="render('tt')">🎵 TikTok</button>
-                <button class="nav-btn" onclick="render('yt')">📹 YouTube</button>
-                <button class="nav-btn" onclick="render('stream')">📺 Streaming</button>
-                <button class="nav-btn" onclick="render('apps')">🛠️ Apps</button>
-                <button class="nav-btn" onclick="render('wsp')">🟢 WhatsApp</button>
+                <button class="nav-btn active" onclick="render('home')"><i class="fa-solid fa-house"></i> Inicio</button>
+                <button class="nav-btn" onclick="render('ff')"><i class="fa-solid fa-fire"></i> Free Fire</button>
+                <button class="nav-btn" onclick="render('roblox')"><i class="fa-solid fa-cube"></i> Roblox</button>
+                <button class="nav-btn" onclick="render('bs')"><i class="fa-solid fa-gun"></i> Block Strike</button>
+                <button class="nav-btn" onclick="render('ig')"><i class="fa-brands fa-instagram"></i> Instagram</button>
+                <button class="nav-btn" onclick="render('tt')"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+                <button class="nav-btn" onclick="render('yt')"><i class="fa-brands fa-youtube"></i> YouTube</button>
+                <button class="nav-btn" onclick="render('stream')"><i class="fa-solid fa-play"></i> Streaming</button>
+                <button class="nav-btn" onclick="render('apps')"><i class="fa-solid fa-mobile-screen"></i> Apps</button>
+                <button class="nav-btn" onclick="render('wsp')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
             </div>
         </div>
     </header>
@@ -171,9 +177,9 @@
 
     <script>
         const DATA = {
-            home: { t: "VFG STORE", d: "Premium Digital Hub", icon: "💎", color: "#00f2ff", rows: [{ n: "Novedades", ph: "Info", items: [["Consultar Servicio", "Gratis"]] }] },
+            home: { t: "VFG STORE", d: "Premium Digital Hub", icon: "fa-solid fa-gem", color: "#00f2ff", rows: [{ n: "Novedades", ph: "Info", items: [["Consultar Servicio", "Gratis"]] }] },
             ff: {
-                t: "Free Fire", d: "Cargas por ID oficiales", icon: "🔥", color: "#ff8c00",
+                t: "Free Fire", d: "Cargas por ID oficiales", icon: "fa-solid fa-fire", color: "#ff8c00",
                 rows: [
                     { n: "Stock por ID ✨", ph: "ID Jugador", items: [["100💎", "1.100"], ["341💎", "3.300"], ["572💎", "5.300"], ["1.166💎", "10.300"], ["2.398💎", "20.300"], ["6.160💎", "55.000"]] },
                     { n: "Diamantes Infinitos ", ph: "ID Jugador", items: [["110💎", "1.450"], ["341💎", "5.000"], ["572💎", "7.000"], ["1166💎", "12.680"], ["6160💎", "60.000"]] },
@@ -181,38 +187,38 @@
                 ]
             },
             roblox: {
-                t: "Roblox", d: "Robux via Gamepass", icon: "🚀", color: "#f0f0f0",
+                t: "Roblox", d: "Robux via Gamepass", icon: "fa-solid fa-cube", color: "#f0f0f0",
                 rows: [{ n: "Cargas", ph: "Usuario", items: [["100 Robux", "1.500"], ["400 Robux", "5.000"], ["800 Robux", "9.000"], ["1.000 Robux", "12.000"], ["2.000 Robux", "20.000"], ["4.000 Robux", "370.000"]] }]
             },
             bs: {
-                t: "Block Strike", d: "Oro oficial para cuentas", icon: "⚔️", color: "#3b82f6",
+                t: "Block Strike", d: "Oro oficial para cuentas", icon: "fa-solid fa-gun", color: "#3b82f6",
                 rows: [{ n: "Oro", ph: "ID de BS", items: [["100 Oro", "1.200"], ["500 Oro", "4.500"], ["1.000 Oro", "8.000"], ["2.500 Oro", "15.000"], ["5.000 Oro", "28.000"]] }]
             },
             ig: {
-                t: "Instagram", d: "Crecimiento Social", icon: "📸", color: "#e1306c",
+                t: "Instagram", d: "Crecimiento Social", icon: "fa-brands fa-instagram", color: "#e1306c",
                 rows: [
                     { n: "Seguidores", ph: "Link Perfil", items: [["100 Seg", "800"], ["1k Seg", "3.500"], ["10k Seg", "10.000"], ["20k Seg", "18.500"]] },
                     { n: "Likes", ph: "Link Foto", items: [["1k Likes", "2.000"], ["5k Likes", "5.000"]] }
                 ]
             },
             tt: {
-                t: "TikTok", d: "Viraliza tu perfil", icon: "🎵", color: "#00f2ea",
+                t: "TikTok", d: "Viraliza tu perfil", icon: "fa-brands fa-tiktok", color: "#ffffff",
                 rows: [{ n: "Social", ph: "Link Video", items: [["10k Vistas", "3.000"], ["100k Vistas", "8.500"], ["1M Vistas", "50.000"]] }]
             },
             yt: {
-                t: "YouTube", d: "Crecimiento de Canal", icon: "🎬", color: "#ff0000",
+                t: "YouTube", d: "Crecimiento de Canal", icon: "fa-brands fa-youtube", color: "#ff0000",
                 rows: [{ n: "Subs", ph: "Link Canal", items: [["100 Subs", "1.500"], ["1k Subs", "15.000"]] }]
             },
             stream: {
-                t: "Streaming", d: "Cuentas Privadas 4K", icon: "📺", color: "#a855f7",
+                t: "Streaming", d: "Cuentas Privadas 4K", icon: "fa-solid fa-play", color: "#a855f7",
                 rows: [{ n: "Plataformas", ph: "WhatsApp", items: [["Netflix", "8.000"], ["Disney+", "7.000"], ["HBO Max", "7.500"], ["Crunchyroll", "4.000"]] }]
             },
             apps: {
-                t: "Apps Pro", d: "Herramientas Premium", icon: "🛠️", color: "#10b981",
+                t: "Apps Pro", d: "Herramientas Premium", icon: "fa-solid fa-mobile-screen", color: "#10b981",
                 rows: [{ n: "Suscripciones", ph: "Correo", items: [["Canva Año", "50.000"], ["CapCut Pro", "7.000"], ["ChatGPT Mes", "5.500"]] }]
             },
             wsp: {
-                t: "WhatsApp", d: "Miembros para Canales", icon: "🟢", color: "#25d366",
+                t: "WhatsApp", d: "Miembros para Canales", icon: "fa-brands fa-whatsapp", color: "#25d366",
                 rows: [{ n: "Servicios", ph: "Link Canal", items: [["100 Miembros", "1.500"], ["1k Miembros", "9.500"]] }]
             }
         };
@@ -223,12 +229,17 @@
             const app = document.getElementById('app');
             const data = DATA[id];
             
+            // Manejo de estado activo en botones
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            if(event) event.currentTarget.classList.add('active');
+            if(window.event && window.event.currentTarget.classList) {
+                window.event.currentTarget.classList.add('active');
+            }
 
             let html = `
                 <div class="section-intro">
-                    <div class="section-icon" style="color:${data.color}">${data.icon}</div>
+                    <div class="section-icon" style="color:${data.color}">
+                        <i class="${data.icon}"></i>
+                    </div>
                     <h2 style="color:${data.color}">${data.t}</h2>
                     <p>${data.d}</p>
                 </div>`;
@@ -238,7 +249,9 @@
                 r.items.forEach(i => {
                     html += `
                         <div class="card" style="--item-color: ${data.color}">
-                            <div class="item-badge" style="background:${data.color}">${data.icon} ${data.t}</div>
+                            <div class="item-badge" style="background:${data.color}">
+                                <i class="${data.icon}"></i> ${data.t}
+                            </div>
                             <div class="item-name">${i[0]}</div>
                             <div class="item-price">${i[1]}</div>
                             <button class="buy-btn" onclick="openMod('${i[0]} ${data.t}', '${i[1]}', '${r.ph}')">Comprar</button>
@@ -269,7 +282,8 @@
             window.open(`https://wa.me/5492984706726?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        render('home');
+        // Carga inicial
+        window.onload = () => render('home');
     </script>
 </body>
 </html>
