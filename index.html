@@ -1,331 +1,288 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VFG Store</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VFG Store | Professional Gaming Services</title>
+    <style>
+        :root {
+            --primary: #fff;
+            --accent: #00d4ff; /* Color celeste neón para resaltar */
+            --bg: #000;
+            --card-bg: #0a0a0a;
+            --border: #222;
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+        *{ margin:0; padding:0; box-sizing:border-box; }
 
-body{
-font-family:'Segoe UI',sans-serif;
-background:#000;
-color:#fff;
-overflow-x:hidden;
-}
+        body{
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+        }
 
-/* ================= POPUP ================= */
-#popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.85);
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:99999;
-}
+        /* ================= POPUP ================= */
+        #popup{
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.9); display:flex;
+            justify-content:center; align-items:center; z-index:99999;
+        }
+        .popup-box{ position:relative; max-width:450px; width:90%; animation:fadeIn 0.5s ease; }
+        .popup-box img{ width:100%; border-radius:20px; border: 1px solid #333; }
+        .cerrar-popup{
+            position:absolute; top:-15px; right:-15px; background: #fff; color: #000;
+            width: 35px; height: 35px; border-radius: 50%; display: flex; 
+            justify-content: center; align-items: center; cursor:pointer; font-weight:bold;
+        }
 
-.popup-box{
-position:relative;
-max-width:500px;
-width:90%;
-animation:fadeIn 0.4s ease;
-}
+        /* HEADER */
+        header{ text-align:center; padding:60px 20px; background: radial-gradient(circle at top, #111 0%, #000 100%); }
+        .logo img{
+            width:150px; padding:10px; border-radius:15px;
+            transition:0.3s ease; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+        }
+        header h1{ font-size:35px; letter-spacing:4px; margin-top:15px; text-transform: uppercase; }
+        header p{ opacity:0.5; font-size: 14px; letter-spacing: 1px; }
 
-.popup-box img{
-width:100%;
-border-radius:15px;
-box-shadow:0 15px 40px rgba(0,0,0,0.6);
-}
+        /* NAVEGACIÓN RÁPIDA (Opcional pero profesional) */
+        .nav-quick {
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;
+        }
+        .nav-item {
+            font-size: 12px; color: #888; text-decoration: none; border: 1px solid #333;
+            padding: 5px 15px; border-radius: 20px; transition: 0.3s;
+        }
+        .nav-item:hover { border-color: var(--accent); color: var(--accent); }
 
-.cerrar-popup{
-position:absolute;
-top:8px;
-right:12px;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-color:white;
-transition:0.3s;
-}
+        /* CONTENEDOR SECCIONES */
+        .container{ width:92%; max-width:1200px; margin:0 auto 100px; }
 
-.cerrar-popup:hover{
-color:red;
-transform:scale(1.2);
-}
-/* ========================================= */
+        .section-title {
+            font-size: 22px; margin: 80px 0 30px; display: flex; align-items: center;
+            text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
+        }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); margin-left: 20px; }
 
-/* Animaciones */
-.fade{
-animation:fadeIn 1s ease forwards;
-}
+        /* GRID */
+        .grid{
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:20px;
+        }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
+        /* TARJETAS */
+        .card{
+            background: var(--card-bg); padding:30px; border-radius:20px;
+            border:1px solid var(--border); transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card:hover{
+            transform:translateY(-10px); border-color: #444;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+        .card h3{ font-size:18px; margin-bottom:5px; font-weight: 500; }
+        .card .category-tag { font-size: 10px; color: #666; text-transform: uppercase; margin-bottom: 15px; }
+        .price{ font-size:24px; font-weight:700; margin-bottom:20px; color: #fff; }
+        
+        button{
+            width:100%; padding:12px; border:none; border-radius:10px;
+            background: var(--primary); color:#000; font-weight:700;
+            cursor:pointer; transition:0.3s; text-transform: uppercase; font-size: 12px;
+        }
+        button:hover{ background: var(--accent); transform: scale(1.02); }
 
-/* HEADER */
-header{
-text-align:center;
-padding:50px 20px 20px;
-}
+        /* MODAL */
+        .modal{
+            display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.95); justify-content:center; align-items:center; z-index:9999;
+        }
+        .modal-content{
+            background:#111; padding:40px; border-radius:20px; width:90%;
+            max-width:450px; border:1px solid #333; position: relative;
+        }
+        .close{ position: absolute; top: 20px; right: 20px; cursor: pointer; color: #555; }
+        
+        input, select{
+            width:100%; padding:14px; margin-top:15px; border-radius:10px;
+            border:1px solid #333; background:#050505; color:white; outline: none;
+        }
+        input:focus { border-color: var(--accent); }
 
-.logo img{
-width:170px;              /* más pequeño */
-height:auto;
-max-width:70%;
-background:#0d0d0d;       /* mismo tono oscuro del fondo */
-padding:8px 18px;         /* efecto rectangular */
-border-radius:10px;       /* bordes suaves */
-box-shadow:0 0 20px rgba(255,255,255,0.05);
-transition:0.3s ease;
-}
+        /* Animaciones */
+        @keyframes fadeIn{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+        .fade{ animation:fadeIn 1s ease forwards; }
 
-.logo img:hover{
-transform:scale(1.04);
-box-shadow:0 0 25px rgba(255,255,255,0.1);
-}
-
-
-
-header h1{
-margin-top:20px;
-font-size:28px;
-letter-spacing:2px;
-}
-
-header p{
-opacity:0.6;
-margin-top:5px;
-}
-
-/* CONTENEDOR */
-.container{
-width:90%;
-max-width:1100px;
-margin:40px auto;
-}
-
-/* TITULOS */
-.section-title{
-font-size:20px;
-margin:60px 0 20px;
-border-left:4px solid #fff;
-padding-left:12px;
-opacity:0.9;
-}
-
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-/* TARJETAS */
-.card{
-background:#111;
-padding:25px;
-border-radius:15px;
-border:1px solid #222;
-transition:0.3s ease;
-}
-
-.card:hover{
-transform:translateY(-6px);
-border:1px solid #444;
-box-shadow:0 10px 30px rgba(255,255,255,0.07);
-}
-
-.card h3{
-font-size:17px;
-margin-bottom:10px;
-}
-
-.price{
-font-size:20px;
-font-weight:bold;
-margin-bottom:15px;
-}
-
-button{
-width:100%;
-padding:10px;
-border:none;
-border-radius:8px;
-background:#fff;
-color:#000;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-background:#ccc;
-}
-
-/* MODAL */
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.85);
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-.modal-content{
-background:#111;
-padding:30px;
-border-radius:14px;
-width:90%;
-max-width:400px;
-border:1px solid #333;
-animation:fadeIn 0.3s ease;
-}
-
-input, select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #333;
-background:#000;
-color:white;
-}
-
-.close{
-text-align:right;
-cursor:pointer;
-margin-bottom:10px;
-color:#aaa;
-}
-</style>
+    </style>
 </head>
-
 <body>
 
-<!-- POPUP -->
-<div id="popup">
-<div class="popup-box">
-<span class="cerrar-popup" onclick="cerrarPopup()">✖</span>
-<img src="promo.jpg" alt="VFG Store Promo">
-</div>
-</div>
+    <div id="popup">
+        <div class="popup-box">
+            <span class="cerrar-popup" onclick="cerrarPopup()">✖</span>
+            <img src="promo.jpg" alt="VFG Store Promo">
+        </div>
+    </div>
 
-<header class="fade">
-<div class="logo">
-<img src="logo.jpg" alt="VFG Store Logo">
-</div>
-<h1>VFG STORE</h1>
-<p>Diamantes y Extras - Entrega Rápida</p>
-</header>
+    <header class="fade">
+        <div class="logo">
+            <img src="logo.jpg" alt="VFG Store Logo">
+        </div>
+        <h1>VFG STORE</h1>
+        <p>Premium Gaming & Digital Services</p>
+    </header>
 
-<div class="container fade">
+    <div class="container fade">
 
-<div class="section-title">Precios Normales 🍀</div>
-<div class="grid">
-<div class="card"><h3>110 💎</h3><div class="price">$1500 ARS</div><button onclick="abrirModal('110 💎 Normal','1500')">Comprar</button></div>
-<div class="card"><h3>341 💎</h3><div class="price">$5000 ARS</div><button onclick="abrirModal('341 💎 Normal','5000')">Comprar</button></div>
-<div class="card"><h3>572 💎</h3><div class="price">$7000 ARS</div><button onclick="abrirModal('572 💎 Normal','7000')">Comprar</button></div>
-<div class="card"><h3>1166 💎</h3><div class="price">$13000 ARS</div><button onclick="abrirModal('1166 💎 Normal','13000')">Comprar</button></div>
-<div class="card"><h3>2398 💎</h3><div class="price">$25000 ARS</div><button onclick="abrirModal('2398 💎 Normal','25000')">Comprar</button></div>
-<div class="card"><h3>6160 💎</h3><div class="price">$70000 ARS</div><button onclick="abrirModal('6160 💎 Normal','70000')">Comprar</button></div>
-</div>
+        <div class="nav-quick">
+            <a href="#freefire" class="nav-item">Free Fire</a>
+            <a href="#robux" class="nav-item">Roblox</a>
+            <a href="#streaming" class="nav-item">Streaming</a>
+            <a href="#social" class="nav-item">Redes Sociales</a>
+        </div>
 
-<div class="section-title">Precios de Stock ⚡</div>
-<div class="grid">
-<div class="card"><h3>110 💎</h3><div class="price">$1200 ARS</div><button onclick="abrirModal('110 💎 Stock','1200')">Comprar</button></div>
-<div class="card"><h3>341 💎</h3><div class="price">$3800 ARS</div><button onclick="abrirModal('341 💎 Stock','3800')">Comprar</button></div>
-<div class="card"><h3>572 💎</h3><div class="price">$5800 ARS</div><button onclick="abrirModal('572 💎 Stock','5800')">Comprar</button></div>
-<div class="card"><h3>1166 💎</h3><div class="price">$11000 ARS</div><button onclick="abrirModal('1166 💎 Stock','11000')">Comprar</button></div>
-<div class="card"><h3>2398 💎</h3><div class="price">$21000 ARS</div><button onclick="abrirModal('2398 💎 Stock','21000')">Comprar</button></div>
-<div class="card"><h3>6160 💎</h3><div class="price">$55000 ARS</div><button onclick="abrirModal('6160 💎 Stock','55000')">Comprar</button></div>
-</div>
+        <div id="freefire" class="section-title">Free Fire 💎</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">Diamantes</div><h3>110 💎 - Directo</h3></div>
+                <div class="price">$1.500</div>
+                <button onclick="abrirModal('110 💎 FF','1.500', 'ID de Jugador')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Suscripción</div><h3>Tarjeta Semanal</h3></div>
+                <div class="price">$3.450</div>
+                <button onclick="abrirModal('Semanal FF','3.450', 'ID de Jugador')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Suscripción</div><h3>Pase Booyah</h3></div>
+                <div class="price">$2.500</div>
+                <button onclick="abrirModal('Pase Booyah FF','2.500', 'ID de Jugador')">Comprar</button>
+            </div>
+        </div>
 
-<div class="section-title">Extras 🌟</div>
-<div class="grid">
-<div class="card"><h3>Tarjeta Semanal 💳</h3><div class="price">$3450 ARS</div><button onclick="abrirModal('Tarjeta Semanal','3450')">Comprar</button></div>
-<div class="card"><h3>Tarjeta Mensual 💳</h3><div class="price">$13500 ARS</div><button onclick="abrirModal('Tarjeta Mensual','13500')">Comprar</button></div>
-<div class="card"><h3>Tarjeta Básica 💳</h3><div class="price">$1000 ARS</div><button onclick="abrirModal('Tarjeta Básica','1000')">Comprar</button></div>
-<div class="card"><h3>Pase Booyah 💳</h3><div class="price">$2500 ARS</div><button onclick="abrirModal('Pase Booyah','2500')">Comprar</button></div>
-</div>
+        <div id="robux" class="section-title">Roblox 🚀</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">Robux</div><h3>400 Robux</h3></div>
+                <div class="price">$4.200</div>
+                <button onclick="abrirModal('400 Robux','4.200', 'Usuario de Roblox')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Robux</div><h3>800 Robux</h3></div>
+                <div class="price">$8.100</div>
+                <button onclick="abrirModal('800 Robux','8.100', 'Usuario de Roblox')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Robux</div><h3>1700 Robux</h3></div>
+                <div class="price">$15.500</div>
+                <button onclick="abrirModal('1700 Robux','15.500', 'Usuario de Roblox')">Comprar</button>
+            </div>
+        </div>
 
-</div>
+        <div id="streaming" class="section-title">Streaming 📺</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">Netflix</div><h3>Pantalla Ultra HD</h3></div>
+                <div class="price">$2.800</div>
+                <button onclick="abrirModal('Netflix 1 Pantalla','2.800', 'Correo de contacto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Disney+</div><h3>Cuenta Completa</h3></div>
+                <div class="price">$4.500</div>
+                <button onclick="abrirModal('Disney Premium','4.500', 'Correo de contacto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Spotify</div><h3>3 Meses Premium</h3></div>
+                <div class="price">$3.200</div>
+                <button onclick="abrirModal('Spotify 3 Meses','3.200', 'Email de cuenta')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">YouTube</div><h3>Premium Personal</h3></div>
+                <div class="price">$2.100</div>
+                <button onclick="abrirModal('YT Premium','2.100', 'Email de cuenta')">Comprar</button>
+            </div>
+        </div>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-<div class="modal-content">
-<div class="close" onclick="cerrarModal()">X</div>
-<h3>Finalizar Pedido</h3>
-<p id="productoSeleccionado"></p>
-<input type="text" id="playerID" placeholder="Ingrese ID del jugador">
-<select id="metodoPago">
-<option value="">Seleccione método de pago</option>
-<option>Transferencia</option>
-<option>Mercado Pago</option>
-<option>USDT</option>
-</select>
-<button onclick="enviarPedido()">Enviar Pedido</button>
-</div>
-</div>
+        <div id="social" class="section-title">Social Media 📈</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">Instagram</div><h3>1,000 Seguidores</h3></div>
+                <div class="price">$1.800</div>
+                <button onclick="abrirModal('1k Seguidores IG','1.800', 'Link del Perfil')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">Instagram</div><h3>5,000 Likes</h3></div>
+                <div class="price">$1.200</div>
+                <button onclick="abrirModal('5k Likes IG','1.200', 'Link de la Foto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">TikTok</div><h3>1,000 Seguidores</h3></div>
+                <div class="price">$2.500</div>
+                <button onclick="abrirModal('1k Seguidores TikTok','2.500', 'Usuario (@)')">Comprar</button>
+            </div>
+        </div>
 
-<script>
-function cerrarPopup(){
-document.getElementById("popup").style.display="none";
-}
+    </div>
 
-let producto="";
-let precio="";
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="close" onclick="cerrarModal()">✕</div>
+            <h2 style="margin-bottom:10px">Finalizar Pedido</h2>
+            <p id="productoSeleccionado" style="font-size: 14px; color: #aaa"></p>
+            
+            <input type="text" id="userData" placeholder="Dato requerido">
+            
+            <select id="metodoPago">
+                <option value="">Seleccione método de pago</option>
+                <option>Transferencia (CBU/CVU)</option>
+                <option>Mercado Pago</option>
+                <option>Binance (USDT)</option>
+            </select>
+            
+            <button style="margin-top:20px; background:var(--accent)" onclick="enviarPedido()">Confirmar por WhatsApp</button>
+        </div>
+    </div>
 
-function abrirModal(prod,pre){
-producto=prod;
-precio=pre;
-document.getElementById("productoSeleccionado").innerHTML=
-"<strong>Producto:</strong> "+prod+"<br><strong>Precio:</strong> $"+pre+" ARS";
-document.getElementById("modal").style.display="flex";
-}
+    <script>
+        function cerrarPopup(){ document.getElementById("popup").style.display="none"; }
 
-function cerrarModal(){
-document.getElementById("modal").style.display="none";
-}
+        let productoActual = "";
+        let precioActual = "";
 
-function enviarPedido(){
-let id=document.getElementById("playerID").value;
-let metodo=document.getElementById("metodoPago").value;
+        function abrirModal(nombre, precio, placeholderText){
+            productoActual = nombre;
+            precioActual = precio;
+            document.getElementById("productoSeleccionado").innerHTML = 
+                "Has seleccionado: <strong>" + nombre + "</strong> por <strong>$" + precio + "</strong>";
+            
+            // Cambiamos el placeholder según el producto
+            document.getElementById("userData").placeholder = placeholderText;
+            document.getElementById("modal").style.display = "flex";
+        }
 
-if(id===""||metodo===""){
-alert("Complete todos los campos");
-return;
-}
+        function cerrarModal(){ document.getElementById("modal").style.display = "none"; }
 
-let mensaje=
-"🛒 NUEVO PEDIDO\n"+
-"━━━━━━━━━━━━━━\n"+
-"💎 Producto: "+producto+"\n"+
-"💵 Precio: $"+precio+" ARS\n"+
-"🆔 ID: "+id+"\n"+
-"💳 Pago: "+metodo;
+        function enviarPedido(){
+            let datoUser = document.getElementById("userData").value;
+            let metodo = document.getElementById("metodoPago").value;
 
-let numero="5492984706726";
-let url="https://wa.me/"+numero+"?text="+encodeURIComponent(mensaje);
+            if(datoUser === "" || metodo === ""){
+                alert("Por favor completa los campos necesarios.");
+                return;
+            }
 
-window.open(url,'_blank');
-}
-</script>
+            let mensaje = 
+                "🚀 *NUEVO PEDIDO - VFG STORE*\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "📦 *Producto:* " + productoActual + "\n" +
+                "💰 *Precio:* $" + precioActual + "\n" +
+                "👤 *Datos:* " + datoUser + "\n" +
+                "💳 *Método:* " + metodo + "\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "Esperando instrucciones de pago...";
 
+            let numero = "5492984706726";
+            let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
+            window.open(url, '_blank');
+        }
+    </script>
 </body>
 </html>
