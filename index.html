@@ -14,6 +14,14 @@
             --text-dim: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
             --grad: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+            /* Colores de Marca */
+            --ff-color: #ff8c00;
+            --rb-color: #f0f0f0;
+            --bs-color: #3b82f6;
+            --ig-color: #e1306c;
+            --tt-color: #00f2ea;
+            --yt-color: #ff0000;
+            --st-color: #a855f7;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -27,71 +35,98 @@
             overflow-x: hidden;
         }
 
-        /* --- MENÚ SUPERIOR PEGADO --- */
+        /* --- MENÚ SUPERIOR --- */
         header {
             position: sticky; top: 0; width: 100%; z-index: 1000;
-            background: rgba(2, 2, 2, 0.85); backdrop-filter: blur(20px);
+            background: rgba(2, 2, 2, 0.9); backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--border);
         }
         .nav-container {
-            max-width: 1400px; margin: 0 auto; display: flex; align-items: center; padding: 15px 20px; gap: 20px;
+            max-width: 1400px; margin: 0 auto; display: flex; align-items: center; padding: 12px 20px; gap: 15px;
         }
-        .logo { font-weight: 800; font-size: 1.2rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+        .logo { font-weight: 800; font-size: 1.3rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
         
         .menu-scroll {
-            display: flex; gap: 10px; overflow-x: auto; padding: 5px 0;
-            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+            display: flex; gap: 8px; overflow-x: auto; padding: 5px 0;
+            scrollbar-width: none;
         }
         .nav-btn {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-dim);
-            padding: 8px 16px; border-radius: 12px; cursor: pointer; font-weight: 600;
-            white-space: nowrap; transition: 0.3s; font-size: 0.85rem;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-dim);
+            padding: 10px 18px; border-radius: 14px; cursor: pointer; font-weight: 600;
+            white-space: nowrap; transition: 0.3s; font-size: 0.8rem;
+            display: flex; align-items: center; gap: 8px;
         }
-        .nav-btn.active { background: var(--grad); color: #000; border: none; }
+        .nav-btn.active { background: #fff; color: #000; border: none; transform: scale(1.05); }
+
+        /* --- ICONOS DE SECCIÓN --- */
+        .section-icon {
+            width: 60px; height: 60px; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; border-radius: 18px;
+            background: var(--card); border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
 
         /* --- CONTENIDO --- */
         main { max-width: 1200px; margin: 0 auto; padding: 40px 20px 100px; min-height: 100vh; }
         
-        .section-intro { margin-bottom: 40px; text-align: center; }
-        .section-intro h2 { font-size: 2.2rem; font-weight: 800; }
+        .section-intro { margin-bottom: 40px; text-align: center; animation: fadeIn 0.5s ease; }
+        .section-intro h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; }
         .section-intro p { color: var(--text-dim); margin-top: 5px; }
 
         .cat-title { 
-            font-size: 0.9rem; font-weight: 800; color: var(--accent); 
-            text-transform: uppercase; margin: 40px 0 20px; letter-spacing: 1px;
+            font-size: 0.85rem; font-weight: 800; color: var(--accent); 
+            text-transform: uppercase; margin: 45px 0 20px; letter-spacing: 2px;
             display: flex; align-items: center; gap: 15px;
         }
         .cat-title::after { content: ""; height: 1px; flex: 1; background: var(--border); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        /* --- GRID DE CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
 
         .card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: 20px; padding: 20px; transition: 0.3s;
+            border-radius: 24px; padding: 25px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; overflow: hidden;
         }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .item-name { font-size: 0.95rem; font-weight: 700; color: var(--text-dim); }
-        .item-price { font-size: 1.5rem; font-weight: 800; margin: 10px 0 20px; color: #fff; }
-        .item-price::before { content: "$"; font-size: 1rem; color: var(--accent); margin-right: 4px; }
+        .card::before {
+            content: ""; position: absolute; top: 0; right: 0; width: 60px; height: 60px;
+            background: radial-gradient(circle at top right, var(--item-color, #333), transparent 70%);
+            opacity: 0.2;
+        }
+        .card:hover { border-color: var(--item-color, var(--accent)); transform: translateY(-8px); }
+        
+        .item-badge { 
+            font-size: 0.65rem; font-weight: 800; color: #000; background: var(--item-color, #fff); 
+            padding: 4px 10px; border-radius: 20px; width: fit-content; margin-bottom: 12px;
+        }
+        .item-name { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .item-price { font-size: 1.8rem; font-weight: 800; margin: 12px 0 25px; color: #fff; }
+        .item-price::before { content: "$"; font-size: 1.1rem; color: var(--item-color, var(--accent)); margin-right: 4px; }
 
         .buy-btn {
-            width: 100%; background: #fff; color: #000; border: none; padding: 12px;
-            border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s;
+            width: 100%; background: #fff; color: #000; border: none; padding: 14px;
+            border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; font-size: 0.8rem;
         }
-        .buy-btn:hover { background: var(--accent); }
+        .buy-btn:hover { background: var(--item-color, var(--accent)); color: #fff; }
 
         /* --- MODAL --- */
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(10px); padding: 20px; }
-        .modal { background: #080808; border: 1px solid var(--border); width: 100%; max-width: 400px; padding: 30px; border-radius: 24px; }
-        input, select { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; background: #111; border: 1px solid var(--border); color: #fff; outline: none; }
-        .confirm-btn { width: 100%; padding: 15px; border-radius: 12px; background: var(--grad); color: #fff; font-weight: 800; border: none; cursor: pointer; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(15px); padding: 20px; }
+        .modal { background: #080808; border: 1px solid var(--border); width: 100%; max-width: 420px; padding: 35px; border-radius: 30px; box-shadow: 0 0 50px rgba(0,242,255,0.1); }
+        input, select { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px; background: #121212; border: 1px solid var(--border); color: #fff; outline: none; }
+        .confirm-btn { width: 100%; padding: 18px; border-radius: 14px; background: var(--grad); color: #fff; font-weight: 800; border: none; cursor: pointer; }
 
-        /* --- RESPONSIVE --- */
+        /* --- ANIMACIONES --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .section-intro h2 { font-size: 1.8rem; }
-            .item-price { font-size: 1.2rem; }
+            .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .section-intro h2 { font-size: 1.9rem; }
+            .card { padding: 18px; }
+            .item-price { font-size: 1.4rem; }
+            .logo { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -120,70 +155,70 @@
     <div class="overlay" id="checkout">
         <div class="modal">
             <h3 id="m-title">Producto</h3>
-            <p id="m-price" style="color:var(--accent); font-weight:800; margin: 10px 0 20px;"></p>
-            <input type="text" id="m-user" placeholder="Usuario / ID / Enlace">
+            <p id="m-price" style="color:var(--accent); font-weight:800; margin: 10px 0 25px; font-size: 1.5rem;"></p>
+            <input type="text" id="m-user" placeholder="Dato">
             <select id="m-pay">
-                <option value="">Método de Pago</option>
+                <option value="">Selecciona Método de Pago</option>
                 <option>Mercado Pago</option>
                 <option>Transferencia</option>
                 <option>Binance (USDT)</option>
             </select>
-            <button class="confirm-btn" onclick="send()">Confirmar WhatsApp</button>
-            <button onclick="closeModal()" style="background:transparent; color:#444; width:100%; margin-top:15px; border:none; cursor:pointer; font-weight:700;">Cerrar</button>
+            <button class="confirm-btn" onclick="send()">Finalizar por WhatsApp</button>
+            <button onclick="closeModal()" style="background:transparent; color:#555; width:100%; margin-top:20px; border:none; cursor:pointer; font-weight:700;">Regresar</button>
         </div>
     </div>
 
     <script>
         const DATA = {
-            home: { t: "VFG STORE", d: "Servicios Digitales Premium", rows: [{ n: "Destacados", ph: "Info", items: [["Consultar Personalizado", "0"]] }] },
+            home: { t: "VFG STORE", d: "Premium Digital Services", icon: "💎", color: "#00f2ff", rows: [{ n: "Novedades", ph: "Consultar", items: [["Servicios Personalizados", "Consultar"]] }] },
             ff: {
-                t: "Free Fire 💎", d: "Carga rápida por ID",
+                t: "Free Fire", d: "Diamantes oficiales al instante", icon: "🔥", color: "#ff8c00",
                 rows: [
                     { n: "Stock por ID ✨", ph: "ID Jugador", items: [["100💎", "1.100"], ["341💎", "3.300"], ["572💎", "5.300"], ["1.166💎", "10.300"], ["2.398💎", "20.300"], ["6.160💎", "55.000"]] },
-                    { n: "Diamantes Infinitos ♾️", ph: "ID Jugador", items: [["100💎", "1.450"], ["300💎", "5.000"], ["500💎", "7.000"], ["1k💎", "12.680"], ["2k💎", "25.000"], ["6k💎", "60.000"]] },
-                    { n: "Extra", ph: "ID Jugador", items: [["Pase Booyah", "3.500"]] }
+                    { n: "Diamantes Infinitos ♾️", ph: "ID Jugador", items: [["100💎", "1.450"], ["300💎", "5.000"], ["500💎", "7.000"], ["1k💎", "12.680"], ["6k💎", "60.000"]] },
+                    { n: "Extras", ph: "ID Jugador", items: [["Pase Booyah", "3.500"]] }
                 ]
             },
             roblox: {
-                t: "Roblox 🚀", d: "Robux via Gamepass",
-                rows: [{ n: "Paquetes", ph: "Usuario Roblox", items: [["100 Robux", "1.500"], ["400 Robux", "5.000"], ["800 Robux", "9.000"], ["1.000 Robux", "12.000"], ["2.000 Robux", "20.000"], ["4.000 Robux", "370.000"]] }]
+                t: "Roblox", d: "Robux via Gamepass", icon: "🚀", color: "#ffffff",
+                rows: [{ n: "Paquetes Robux", ph: "Usuario Roblox", items: [["100 Robux", "1.500"], ["400 Robux", "5.000"], ["800 Robux", "9.000"], ["1.000 Robux", "12.000"], ["2.000 Robux", "20.000"], ["4.000 Robux", "370.000"]] }]
             },
             bs: {
-                t: "Block Strike 🔫", d: "Oro oficial para tu cuenta",
-                rows: [{ n: "Oro", ph: "ID de BS", items: [["100 Oro", "1.200"], ["500 Oro", "4.500"], ["1.000 Oro", "8.000"], ["2.500 Oro", "15.000"], ["5.000 Oro", "28.000"]] }]
+                t: "Block Strike", d: "Oro para tu cuenta oficial", icon: "⚔️", color: "#3b82f6",
+                rows: [{ n: "Oro Directo", ph: "ID de BS", items: [["100 Oro", "1.200"], ["500 Oro", "4.500"], ["1.000 Oro", "8.000"], ["2.500 Oro", "15.000"], ["5.000 Oro", "28.000"]] }]
             },
             ig: {
-                t: "Instagram 📸", d: "Seguidores y Likes reales",
+                t: "Instagram", d: "Crecimiento Social Media", icon: "📸", color: "#e1306c",
                 rows: [
-                    { n: "Seguidores", ph: "Link Perfil", items: [["100 Seg", "800"], ["300 Seg", "1.600"], ["500 Seg", "2.000"], ["1k Seg", "3.500"], ["5k Seg", "7.000"], ["10k Seg", "10.000"], ["20k Seg", "18.500"]] },
-                    { n: "Likes", ph: "Link Post", items: [["100 Likes", "500"], ["1k Likes", "2.000"], ["5k Likes", "5.000"], ["10k Likes", "10.000"]] }
+                    { n: "Seguidores Reales", ph: "Link Perfil", items: [["100 Seg", "800"], ["1k Seg", "3.500"], ["5k Seg", "7.000"], ["10k Seg", "10.000"], ["20k Seg", "18.500"]] },
+                    { n: "Likes y Vistas", ph: "Link Post", items: [["1k Likes", "2.000"], ["10k Likes", "10.000"], ["100k Vistas", "10.000"]] }
                 ]
             },
             tt: {
-                t: "TikTok 🎵", d: "Viraliza tu contenido",
+                t: "TikTok", d: "Viralización de contenidos", icon: "🎵", color: "#00f2ea",
                 rows: [
-                    { n: "Vistas", ph: "Link Video", items: [["1k Vistas", "500"], ["10k Vistas", "3.000"], ["100k Vistas", "8.500"], ["1M Vistas", "50.000"]] },
-                    { n: "Likes", ph: "Link Video", items: [["100 Likes", "500"], ["1k Likes", "2.500"], ["10k Likes", "15.000"]] }
+                    { n: "Vistas Flash", ph: "Link Video", items: [["10k Vistas", "3.000"], ["100k Vistas", "8.500"], ["1M Vistas", "50.000"]] },
+                    { n: "Seguidores / Likes", ph: "Link / User", items: [["100 Likes", "500"], ["1k Likes", "2.500"], ["1k Seg", "15.000"]] }
                 ]
             },
             yt: {
-                t: "YouTube 📹", d: "Crecimiento de canal",
+                t: "YouTube", d: "Canales y Monetización", icon: "🎬", color: "#ff0000",
                 rows: [
-                    { n: "Subs", ph: "Link Canal", items: [["100 Subs", "1.500"], ["1k Subs", "15.000"]] },
-                    { n: "Vistas", ph: "Link Video", items: [["1k Vistas", "5.500"], ["10k Vistas", "30.000"]] }
+                    { n: "Suscriptores", ph: "Link Canal", items: [["100 Subs", "1.500"], ["1k Subs", "15.000"]] },
+                    { n: "Vistas 4k", ph: "Link Video", items: [["1k Vistas", "5.500"], ["10k Vistas", "30.000"]] }
                 ]
             },
             stream: {
-                t: "Streaming 📺", d: "Cuentas Premium 4K",
-                rows: [{ n: "Cuentas", ph: "WhatsApp", items: [["Netflix", "8.000"], ["Disney+", "7.000"], ["HBO Max", "7.500"], ["Paramount+", "5.500"], ["Crunchyroll", "4.000"], ["Apple TV", "13.000"]] }]
+                t: "Streaming", d: "Cuentas Privadas Estables", icon: "🍿", color: "#a855f7",
+                rows: [{ n: "Plataformas", ph: "WhatsApp", items: [["Netflix", "8.000"], ["Disney+", "7.000"], ["HBO Max", "7.500"], ["Paramount+", "5.500"], ["Crunchyroll", "4.000"], ["Apple TV", "13.000"]] }]
             },
             apps: {
-                t: "Apps 🛠️", d: "Herramientas Pro",
-                rows: [{ n: "Pro", ph: "Correo", items: [["Canva Año", "50.000"], ["CapCut Pro", "7.000"], ["ChatGPT Mes", "5.500"]] }]
+                t: "Apps Pro", d: "Suscripciones de Trabajo", icon: "🛠️", color: "#10b981",
+                rows: [{ n: "Diseño e IA", ph: "Correo", items: [["Canva Año", "50.000"], ["CapCut Pro", "7.000"], ["ChatGPT Mes", "5.500"]] }]
             },
             wsp: {
-                t: "WhatsApp 🟢", d: "Miembros y Reacciones",
-                rows: [{ n: "Miembros", ph: "Link Canal", items: [["100 Miembros", "1.500"], ["1k Miembros", "9.500"]] }]
+                t: "WhatsApp", d: "Servicios para Canales", icon: "🟢", color: "#25d366",
+                rows: [{ n: "Crecimiento", ph: "Link Canal", items: [["100 Miembros", "1.500"], ["1k Miembros", "9.500"]] }]
             }
         };
 
@@ -191,20 +226,33 @@
             const app = document.getElementById('app');
             const data = DATA[id];
             
-            // UI Active
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            event?.currentTarget?.classList.add('active');
+            if(event) event.currentTarget.classList.add('active');
 
-            let html = `<div class="section-intro"><h2>${data.t}</h2><p>${data.d}</p></div>`;
+            let html = `
+                <div class="section-intro">
+                    <div class="section-icon" style="color:${data.color}">${data.icon}</div>
+                    <h2 style="color:${data.color}">${data.t}</h2>
+                    <p>${data.d}</p>
+                </div>`;
+
             data.rows.forEach(r => {
                 html += `<div class="cat-title">${r.n}</div><div class="grid">`;
                 r.items.forEach(i => {
-                    html += `<div class="card"><div><div class="item-name">${i[0]}</div><div class="item-price">${i[1]}</div></div><button class="buy-btn" onclick="openMod('${i[0]} ${data.t}', '${i[1]}', '${r.ph}')">Comprar</button></div>`;
+                    html += `
+                        <div class="card" style="--item-color: ${data.color}">
+                            <div class="item-badge" style="background:${data.color}">${data.icon} ${data.t}</div>
+                            <div>
+                                <div class="item-name">${i[0]}</div>
+                                <div class="item-price">${i[1]}</div>
+                            </div>
+                            <button class="buy-btn" onclick="openMod('${i[0]} ${data.t}', '${i[1]}', '${r.ph}')">Comprar Ahora</button>
+                        </div>`;
                 });
                 html += `</div>`;
             });
             app.innerHTML = html;
-            window.scrollTo(0,0);
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         let selI, selP;
@@ -212,7 +260,7 @@
             selI = n; selP = p;
             document.getElementById('m-title').innerText = n;
             document.getElementById('m-price').innerText = "$" + p;
-            document.getElementById('m-user').placeholder = ph;
+            document.getElementById('m-user').placeholder = "Ingresa tu " + ph;
             document.getElementById('checkout').style.display = 'flex';
         }
 
@@ -221,8 +269,8 @@
         function send() {
             const u = document.getElementById('m-user').value;
             const p = document.getElementById('m-pay').value;
-            if(!u || !p) return alert("Completa los datos");
-            const msg = `🚀 *PEDIDO VFG STORE*\n📦 *${selI}*\n💰 *Precio:* $${selP}\n👤 *Dato:* ${u}\n💳 *Pago:* ${p}`;
+            if(!u || !p) return alert("⚠️ Por favor completa los campos");
+            const msg = `🚀 *PEDIDO VFG STORE*\n\n📦 *Servicio:* ${selI}\n💰 *Monto:* $${selP}\n👤 *Dato:* ${u}\n💳 *Pago:* ${p}`;
             window.open(`https://wa.me/5492984706726?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
