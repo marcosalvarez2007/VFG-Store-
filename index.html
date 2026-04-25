@@ -3,123 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VFG STORE | Enterprise Digital Solutions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>VFG Store | Professional Gaming & Digital Services</title>
     <style>
+        /* --- VARIABLES Y RESET --- */
         :root {
-            --bg: #050505;
-            --sidebar-bg: #080808;
-            --accent: #00f2ff;
-            --accent-glow: rgba(0, 242, 255, 0.25);
-            --card-bg: #111111;
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.07);
-            --gradient: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --primary: #fff;
+            --accent: #00d4ff; /* Celeste neón principal */
+            --ff-color: #ffcc00; /* Dorado Free Fire */
+            --rbx-color: #00e676; /* Verde Roblox */
+            --stream-color: #e50914; /* Rojo Netflix */
+            --app-color: #8e44ad; /* Morado Apps */
+            --ig-color: #c13584; /* Rosa Instagram */
+            --tt-color: #ff0050; /* Rojo/Cian TikTok */
+            --yt-color: #ff0000; /* Rojo YouTube */
+            --wsp-color: #25d366; /* Verde WhatsApp */
+            
+            --bg: #000;
+            --card-bg: #0a0a0a;
+            --border: #1a1a1a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        *{ margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
-            overflow: hidden;
+        body{
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- SISTEMA DE POPUP --- */
-        #popup {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 10000; backdrop-filter: blur(12px); transition: var(--transition);
-        }
-        .popup-box { position: relative; max-width: 420px; width: 85%; }
-        .popup-box img { width: 100%; border-radius: 24px; border: 1px solid var(--glass-border); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-        .cerrar-popup {
-            position: absolute; top: -15px; right: -15px; background: var(--accent);
-            color: #000; width: 36px; height: 36px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; font-weight: 800; z-index: 10001;
-        }
+        /* --- UI ELEMENTS (Scrollbar, etc.) --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        /* --- SIDEBAR --- */
-        nav {
-            width: 300px; background: var(--sidebar-bg); border-right: 1px solid var(--glass-border);
-            display: flex; flex-direction: column; padding: 40px 20px; z-index: 100;
+        /* --- POPUP DE BIENVENIDA --- */
+        #popup{
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.95); display:flex;
+            justify-content:center; align-items:center; z-index:99999;
         }
-        .nav-logo { margin-bottom: 45px; text-align: center; }
-        .nav-logo h1 { font-size: 1.4rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .menu-links { flex: 1; overflow-y: auto; }
-        .menu-btn {
-            width: 100%; padding: 15px 20px; margin-bottom: 10px; background: transparent;
-            border: 1px solid transparent; border-radius: 16px; color: var(--text-dim);
-            text-align: left; cursor: pointer; font-size: 0.95rem; font-weight: 600;
-            transition: var(--transition); display: flex; align-items: center; gap: 14px;
+        .popup-box{ position:relative; max-width:450px; width:90%; animation:fadeInUp 0.6s ease; }
+        .popup-box img{ width:100%; border-radius:20px; border: 1px solid #333; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+        .cerrar-popup{
+            position:absolute; top:-15px; right:-15px; background: var(--primary); color: #000;
+            width: 35px; height: 35px; border-radius: 50%; display: flex; 
+            justify-content: center; align-items: center; cursor:pointer; font-weight:bold;
+            transition: 0.3s; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
-        .menu-btn:hover { background: rgba(255,255,255,0.04); color: #fff; }
-        .menu-btn.active { background: rgba(0, 242, 255, 0.08); border-color: rgba(0, 242, 255, 0.2); color: var(--accent); }
+        .cerrar-popup:hover { transform: scale(1.1) rotate(90deg); background: var(--accent); }
 
-        /* --- ÁREA DE CONTENIDO --- */
-        main { flex: 1; height: 100vh; overflow-y: auto; padding: 60px; scroll-behavior: smooth; position: relative; }
-        .page-content { display: none; animation: pageIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        .page-content.active { display: block; }
-
-        .section-header { margin-bottom: 50px; border-left: 4px solid var(--accent); padding-left: 25px; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 800; }
-
-        .sub-category-title { font-size: 1.1rem; font-weight: 700; margin: 40px 0 20px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
-        .sub-category-title::after { content: ""; height: 1px; flex: 1; background: var(--glass-border); }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
-
-        .card {
-            background: var(--card-bg); border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 28px; transition: var(--transition);
+        /* --- HEADER --- */
+        header{ text-align:center; padding:80px 20px; background: radial-gradient(circle at top, #111 0%, #000 100%); position: relative;}
+        header::after { content:''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80%; height: 1px; background: linear-gradient(90deg, transparent, #222, transparent); }
+        
+        .logo img{
+            width:160px; padding:10px; border-radius:15px;
+            transition:0.4s ease; filter: drop-shadow(0 0 15px rgba(255,255,255,0.1));
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
-        .item-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; display: block;}
-        .price { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 20px; display: block; }
-        .price::before { content: "$"; font-size: 1rem; color: var(--accent); margin-right: 3px; }
+        .logo img:hover { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(0,212,255,0.2)); }
+        
+        header h1{ font-size:40px; letter-spacing:5px; margin-top:20px; text-transform: uppercase; font-weight: 800;}
+        header p{ opacity:0.6; font-size: 15px; letter-spacing: 2px; margin-top: 5px; font-weight: 300;}
 
-        .buy-btn {
-            width: 100%; background: #fff; color: #000; border: none; padding: 14px;
-            border-radius: 14px; font-weight: 800; cursor: pointer; transition: 0.3s;
+        /* --- NAVEGACIÓN RÁPIDA SUPERIOR --- */
+        .nav-quick-container {
+            position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0;
         }
-        .buy-btn:hover { background: var(--accent); }
+        .nav-quick {
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 0 20px;
+        }
+        .nav-item {
+            font-size: 12px; color: #aaa; text-decoration: none; border: 1px solid #222;
+            padding: 6px 16px; border-radius: 20px; transition: 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 500;
+        }
+        .nav-item:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.05); }
 
-        /* --- MODAL --- */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 20000;
-            backdrop-filter: blur(15px);
+        /* --- CONTENEDOR PRINCIPAL DE SECCIONES --- */
+        .container{ width:92%; max-width:1200px; margin: 40px auto 100px; }
+
+        /* --- ESTILOS DE TÍTULOS DE SECCIÓN --- */
+        .section-title {
+            font-size: 24px; margin: 100px 0 40px; display: flex; align-items: center;
+            text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
+            position: relative; padding-left: 15px;
         }
-        .modal-content {
-            background: #0d0d0d; width: 90%; max-width: 450px; padding: 40px;
-            border-radius: 32px; border: 1px solid var(--glass-border);
-        }
-        input, select {
-            width: 100%; padding: 18px; margin-bottom: 15px; border-radius: 15px;
-            background: #151515; border: 1px solid var(--glass-border); color: #fff;
-        }
-        .confirm-btn {
-            width: 100%; padding: 18px; border-radius: 15px; border: none;
-            background: var(--gradient); color: #fff; font-weight: 800; cursor: pointer;
+        .section-title::before { content:''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 70%; border-radius: 2px; }
+        .section-title::after { content: ""; flex: 1; height: 1px; margin-left: 20px; }
+
+        /* Colores específicos para títulos */
+        .title-ff { color: var(--ff-color); } .title-ff::before, .title-ff::after { background: linear-gradient(90deg, var(--ff-color), transparent); }
+        .title-rbx { color: var(--rbx-color); } .title-rbx::before, .title-rbx::after { background: linear-gradient(90deg, var(--rbx-color), transparent); }
+        .title-stream { color: var(--stream-color); } .title-stream::before, .title-stream::after { background: linear-gradient(90deg, var(--stream-color), transparent); }
+        .title-app { color: var(--app-color); } .title-app::before, .title-app::after { background: linear-gradient(90deg, var(--app-color), transparent); }
+        .title-ig { color: var(--ig-color); } .title-ig::before, .title-ig::after { background: linear-gradient(90deg, var(--ig-color), transparent); }
+        .title-tt { color: var(--tt-color); } .title-tt::before, .title-tt::after { background: linear-gradient(90deg, var(--tt-color), transparent); }
+        .title-yt { color: var(--yt-color); } .title-yt::before, .title-yt::after { background: linear-gradient(90deg, var(--yt-color), transparent); }
+        .title-wsp { color: var(--wsp-color); } .title-wsp::before, .title-wsp::after { background: linear-gradient(90deg, var(--wsp-color), transparent); }
+
+        /* --- GRID DE TARJETAS --- */
+        .grid{
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:25px;
         }
 
-        @keyframes pageIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-
-        @media (max-width: 950px) {
-            body { flex-direction: column; }
-            nav { width: 100%; padding: 15px; border-right: none; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; }
-            .menu-links { display: flex; overflow-x: auto; gap: 10px; }
-            .menu-btn { width: auto; white-space: nowrap; margin-bottom: 0; }
-            .nav-logo { display: none; }
-            main { padding: 30px 20px 100px; }
+        /* --- ESTILOS DE TARJETAS (CARDS) --- */
+        .card{
+            background: var(--card-bg); padding:35px; border-radius:22px;
+            border:1px solid var(--border); transition:all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; overflow: hidden;
         }
+        .card:hover{
+            transform:translateY(-8px); border-color: #333;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        
+        /* Brillo sutil al pasar el mouse */
+        .card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            transition: 0.5s;
+        }
+        .card:hover::before { left: 100%; }
+
+        /* Detalles internos de la tarjeta */
+        .card h3{ font-size:20px; margin-bottom:8px; font-weight: 600; letter-spacing: 0.5px;}
+        .card .category-tag { 
+            font-size: 11px; color: #666; text-transform: uppercase; 
+            margin-bottom: 18px; letter-spacing: 1.5px; font-weight: 400;
+            display: flex; align-items: center; gap: 5px;
+        }
+        
+        /* Precios */
+        .price-container { margin-bottom: 25px; }
+        .price-label { font-size: 12px; color: #888; display: block; margin-bottom: -5px; }
+        .price{ font-size:28px; font-weight:800; color: #fff; letter-spacing: -1px; }
+        
+        /* Botones de compra */
+        .card button{
+            width:100%; padding:14px; border:none; border-radius:12px;
+            background: var(--primary); color:#000; font-weight:700;
+            cursor:pointer; transition: 0.3s ease; text-transform: uppercase; 
+            font-size: 13px; letter-spacing: 1px;
+        }
+        .card button:hover{ background: var(--accent); transform: scale(1.03); box-shadow: 0 5px 15px rgba(0,212,255,0.3); }
+
+        /* --- MODAL DE FINALIZACIÓN --- */
+        .modal{
+            display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.97); justify-content:center; align-items:center; z-index:9999;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content{
+            background:#080808; padding:45px; border-radius:24px; width:90%;
+            max-width:480px; border:1px solid #222; position: relative;
+            animation: fadeInUp 0.4s ease; box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+        }
+        .close{ position: absolute; top: 25px; right: 25px; cursor: pointer; color: #444; font-size: 20px; transition: 0.3s; }
+        .close:hover { color: var(--stream-color); transform: rotate(90deg); }
+        
+        .modal h2 { font-size: 28px; margin-bottom: 10px; letter-spacing: 1px; }
+        #productoSeleccionado { font-size: 15px; color: #aaa; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #1a1a1a; }
+        
+        /* Inputs y Selects del Modal */
+        input, select{
+            width:100%; padding:16px; margin-top:18px; border-radius:12px;
+            border:1px solid #2a2a2a; background:#000; color:white; 
+            outline: none; font-size: 15px; transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0,212,255,0.1); }
+        ::placeholder { color: #555; }
+        
+        .modal button { 
+            margin-top:35px; background: var(--accent); color: #000; padding: 16px; font-size: 14px; 
+            transition: 0.3s;
+        }
+        .modal button:hover { background: #fff; box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
+
+        /* --- FOOTER SMM LAB STYLE --- */
+        footer {
+            text-align: center; padding: 60px 20px; border-top: 1px solid var(--border);
+            background: #050505; font-size: 13px; color: #555; letter-spacing: 1px;
+        }
+        footer strong { color: #888; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes fadeInUp{ from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+        .fade{ animation:fadeInUp 1s ease forwards; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 30px; }
+            .section-title { font-size: 20px; }
+            .modal-content { padding: 30px; }
+            .nav-quick { gap: 5px; }
+            .nav-item { padding: 5px 12px; font-size: 11px; }
+        }
+
     </style>
 </head>
 <body>
@@ -127,149 +211,161 @@
     <div id="popup">
         <div class="popup-box">
             <span class="cerrar-popup" onclick="cerrarPopup()">✕</span>
-            <img src="promo.jpg" alt="VFG Promo">
+            <img src="promo.jpg" alt="VFG Store Promoción Especial">
         </div>
     </div>
 
-    <nav>
-        <div class="nav-logo"><h1>VFG STORE</h1></div>
-        <div class="menu-links">
-            <button class="menu-btn active" onclick="navTo('home')">🏠 Inicio</button>
-            <button class="menu-btn" onclick="navTo('ff')">💎 Free Fire</button>
-            <button class="menu-btn" onclick="navTo('roblox')">🚀 Roblox</button>
-            <button class="menu-btn" onclick="navTo('bs')">🔫 Block Strike</button>
-            <button class="menu-btn" onclick="navTo('stream')">📺 Streaming</button>
-            <button class="menu-btn" onclick="navTo('apps')">🛠️ Herramientas</button>
-            <button class="menu-btn" onclick="navTo('ig')">📸 Instagram</button>
-            <button class="menu-btn" onclick="navTo('tt')">🎵 TikTok</button>
-            <button class="menu-btn" onclick="navTo('yt')">📹 YouTube</button>
-            <button class="menu-btn" onclick="navTo('wsp')">🟢 WhatsApp</button>
+    <header class="fade">
+        <div class="logo">
+            <img src="logo.jpg" alt="VFG Store Logo Profesional">
         </div>
-    </nav>
+        <h1>VFG STORE</h1>
+        <p>Premium Gaming & Digital Boosting Services</p>
+    </header>
 
-    <main id="mainView"></main>
-
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <h3 id="m-name">Producto</h3>
-            <p id="m-price" style="color:var(--accent); font-weight:800; margin: 15px 0;"></p>
-            <input type="text" id="u-data" placeholder="Dato requerido">
-            <select id="u-pay">
-                <option value="">Selecciona Pago</option>
-                <option>Mercado Pago</option>
-                <option>Transferencia</option>
-                <option>Binance (USDT)</option>
-            </select>
-            <button class="confirm-btn" onclick="executeOrder()">Confirmar WhatsApp</button>
-            <button onclick="closeModal()" style="background:transparent; color:#444; border:none; width:100%; margin-top:15px; cursor:pointer;">Cerrar</button>
+    <div class="nav-quick-container fade">
+        <div class="nav-quick">
+            <a href="#freefire" class="nav-item">Free Fire</a>
+            <a href="#robux" class="nav-item">Roblox</a>
+            <a href="#streaming" class="nav-item">Streaming</a>
+            <a href="#apps" class="nav-item">Apps</a>
+            <a href="#ig-fol" class="nav-item">IG Seguidores</a>
+            <a href="#ig-lik" class="nav-item">IG Likes</a>
+            <a href="#tiktok" class="nav-item">TikTok</a>
+            <a href="#wsp" class="nav-item">WhatsApp</a>
+            <a href="#yt" class="nav-item">YouTube</a>
         </div>
     </div>
 
-    <script>
-        const DB = {
-            ff: {
-                title: "Free Fire 💎", desc: "Diamantes oficiales.",
-                groups: [
-                    { name: "Stock por ID ✨", ph: "ID Jugador", items: [["100💎", "1.100"], ["341💎", "3.300"], ["572💎", "5.300"], ["1.166💎", "10.300"], ["2.398💎", "20.300"], ["6.160💎", "55.000"]] },
-                    { name: "Infinitos ♾️", ph: "ID Jugador", items: [["100💎", "1.450"], ["300💎", "5.000"], ["500💎", "7.000"], ["1k💎", "12.680"], ["2k💎", "25.000"], ["6k💎", "60.000"]] },
-                    { name: "Extra", ph: "ID Jugador", items: [["Pase Booyah", "3.500"]] }
-                ]
-            },
-            roblox: {
-                title: "Roblox 🚀", desc: "Robux via Gamepass.",
-                groups: [
-                    { name: "Robux", ph: "Usuario", items: [["100", "1.500"], ["400", "5.000"], ["800", "9.000"], ["1000", "12.000"], ["2000", "20.000"], ["4000", "370.000"]] }
-                ]
-            },
-            bs: {
-                title: "Block Strike 🔫", desc: "Oro para tu cuenta.",
-                groups: [
-                    { name: "Oro Block Strike", ph: "Usuario/ID BS", items: [["100 Oro", "1.200"], ["500 Oro", "4.500"], ["1000 Oro", "8.000"], ["2500 Oro", "15.000"], ["5000 Oro", "28.000"]] }
-                ]
-            },
-            stream: {
-                title: "Streaming 📺", desc: "Perfiles 4K.",
-                groups: [
-                    { name: "Cuentas", ph: "WhatsApp", items: [["Netflix", "8.000"], ["Disney+", "7.000"], ["Crunchyroll", "4.000"], ["HBO Max Est.", "7.000"], ["HBO Max Plat.", "7.500"], ["Paramount+", "5.500"], ["Apple TV", "13.000"]] }
-                ]
-            },
-            apps: {
-                title: "Apps & Herramientas 🛠️", desc: "Suscripciones Pro.",
-                groups: [
-                    { name: "Productividad", ph: "Email", items: [["Canva Mes", "6.500"], ["Canva Año", "50.000"], ["CapCut Pro", "7.000"], ["ChatGPT Mes", "5.500"], ["ChatGPT Año", "20.000"]] }
-                ]
-            },
-            ig: {
-                title: "Instagram 📸", desc: "Crecimiento IG.",
-                groups: [
-                    { name: "Seguidores", ph: "Link Perfil", items: [["100", "800"], ["300", "1.600"], ["500", "2.000"], ["1k", "3.500"], ["5k", "7.000"], ["10k", "10.000"], ["20k", "18.500"]] },
-                    { name: "Likes", ph: "Link Post", items: [["100", "500"], ["300", "1k"], ["500", "1.5k"], ["1k", "2k"], ["5k", "5k"], ["10k", "10k"], ["20k", "18k"]] },
-                    { name: "Vistas", ph: "Link Reel", items: [["1k", "500"], ["3k", "1k"], ["5k", "1.5k"], ["10k", "2k"], ["50k", "5.5k"], ["100k", "10k"], ["500k", "18k"]] }
-                ]
-            },
-            tt: {
-                title: "TikTok 🎵", desc: "Viralización.",
-                groups: [
-                    { name: "Seguidores", ph: "Usuario", items: [["100", "1.500"]] },
-                    { name: "Likes", ph: "Link Video", items: [["100", "500"], ["300", "1k"], ["500", "1.5k"], ["1k", "2.5k"], ["5k", "7.5k"], ["10k", "15k"], ["20k", "17k"]] },
-                    { name: "Vistas", ph: "Link Video", items: [["1k", "500"], ["3k", "1.5k"], ["5k", "1.7k"], ["10k", "3k"], ["50k", "5k"], ["100k", "8.5k"], ["500k", "30k"], ["1M", "50k"]] }
-                ]
-            },
-            yt: {
-                title: "YouTube 📹", desc: "Canal Pro.",
-                groups: [
-                    { name: "Subs", ph: "Link Canal", items: [["100", "1.500"], ["200", "3k"], ["300", "4.5k"], ["500", "7k"], ["1k", "15k"]] },
-                    { name: "Likes", ph: "Link Video", items: [["100", "500"], ["500", "2k"], ["1k", "3k"], ["5k", "4.5k"], ["10k", "7k"]] },
-                    { name: "Vistas", ph: "Link Video", items: [["500", "3k"], ["1k", "5.5k"], ["5k", "15k"], ["10k", "30k"]] }
-                ]
-            },
-            wsp: {
-                title: "WhatsApp 🟢", desc: "Canales.",
-                groups: [
-                    { name: "Miembros", ph: "Link Canal", items: [["50", "700"], ["100", "1.500"], ["200", "2.500"], ["500", "5k"], ["1k", "9.5k"]] },
-                    { name: "Reacciones", ph: "Link Mensaje", items: [["50", "700"], ["100", "1k"], ["500", "5k"], ["1k", "7k"], ["5k", "25k"], ["10k", "50k"]] }
-                ]
-            }
-        };
+    <div class="container fade">
 
-        function navTo(pageId) {
-            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-            event?.currentTarget?.classList.add('active');
-            const main = document.getElementById('mainView');
-            if(pageId === 'home') {
-                main.innerHTML = `<div class="page-content active"><div class="section-header"><h2>VFG STORE</h2><p>Servicios de alta gama.</p></div><div style="background:var(--card-bg); padding:50px; border-radius:30px; border:1px solid var(--accent); text-align:center;"><h2>Bienvenido</h2><p style="margin-top:20px; color:var(--text-dim)">Usa el menú para navegar.</p></div></div>`;
-                return;
-            }
-            const data = DB[pageId];
-            let html = `<div class="page-content active"><div class="section-header"><h2>${data.title}</h2><p>${data.desc}</p></div>`;
-            data.groups.forEach(g => {
-                html += `<div class="sub-category-title">${g.name}</div><div class="grid">`;
-                g.items.forEach(i => {
-                    html += `<div class="card"><span class="item-name">${i[0]}</span><span class="price">${i[1]}</span><button class="buy-btn" onclick="openOrder('${i[0]} ${data.title}', '${i[1]}', '${g.ph}')">Comprar</button></div>`;
-                });
-                html += `</div>`;
-            });
-            main.innerHTML = html + `</div>`;
-            if(window.innerWidth < 950) window.scrollTo(0,0);
-        }
+        <div id="freefire" class="section-title title-ff">Free Fire 💎</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">💎 Diamantes Directos</div><h3>110 💎</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$1.500</div></div>
+                <button onclick="abrirModal('110 💎 FF','1.500', 'playerID')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">💳 Suscripción</div><h3>Tarjeta Semanal</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$3.450</div></div>
+                <button onclick="abrirModal('Semanal FF','3.450', 'playerID')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">🎫 Pase Especial</div><h3>Pase Booyah</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$2.500</div></div>
+                <button onclick="abrirModal('Pase Booyah FF','2.500', 'playerID')">Comprar</button>
+            </div>
+            </div>
 
-        let curI = "", curP = "";
-        function openOrder(n,p,ph) { 
-            curI=n; curP=p; 
-            document.getElementById('m-name').innerText=n; 
-            document.getElementById('m-price').innerText="$"+p; 
-            document.getElementById('u-data').placeholder=ph; 
-            document.getElementById('orderModal').style.display='flex'; 
-        }
-        function closeModal() { document.getElementById('orderModal').style.display='none'; }
-        function cerrarPopup() { document.getElementById('popup').style.display='none'; }
-        function executeOrder() {
-            const d = document.getElementById('u-data').value, p = document.getElementById('u-pay').value;
-            if(!d || !p) return alert("Completa los datos");
-            const msg = `🚀 *NUEVO PEDIDO VFG STORE*\n\n📦 *Producto:* ${curI}\n💰 *Monto:* $${curP}\n👤 *Dato:* ${d}\n💳 *Pago:* ${p}`;
-            window.open(`https://wa.me/5492984706726?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-        window.onload = () => navTo('home');
-    </script>
-</body>
-</html>
+
+        <div id="robux" class="section-title title-rbx">Roblox 🚀</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">💸 Robuxs</div><h3>400 Robuxs</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$4.200</div></div>
+                <button onclick="abrirModal('400 Robux','4.200', 'robloxUser')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">💸 Robuxs</div><h3>800 Robuxs</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$8.100</div></div>
+                <button onclick="abrirModal('800 Robux','8.100', 'robloxUser')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">💸 Robuxs</div><h3>1700 Robuxs</h3></div>
+                <div class="price-container"><span class="price-label">Precio</span><div class="price">$15.500</div></div>
+                <button onclick="abrirModal('1700 Robux','15.500', 'robloxUser')">Comprar</button>
+            </div>
+        </div>
+
+
+        <div id="streaming" class="section-title title-stream">Plataformas Streaming 📺</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">🎬 Netflix</div><h3>Pantalla Ultra HD</h3></div>
+                <div class="price-container"><span class="price-label">Mensual</span><div class="price">$2.800</div></div>
+                <button onclick="abrirModal('Netflix 1 Pantalla','2.800', 'emailContacto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">🎬 Disney+</div><h3>Estándar (2 SPN)</h3></div>
+                <div class="price-container"><span class="price-label">Mensual</span><div class="price">$7.000</div></div>
+                <button onclick="abrirModal('Disney Estándar','7.000', 'emailContacto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">🎬 Disney+</div><h3>Premium (7 SPN)</h3></div>
+                <div class="price-container"><span class="price-label">Mensual</span><div class="price">$7.500</div></div>
+                <button onclick="abrirModal('Disney Premium','7.500', 'emailContacto')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">🎧 Spotify</div><h3>3 Meses Premium</h3></div>
+                <div class="price-container"><span class="price-label">Plan 3 Meses</span><div class="price">$3.200</div></div>
+                <button onclick="abrirModal('Spotify 3 Meses','3.200', 'emailCuenta')">Comprar</button>
+            </div>
+        </div>
+
+
+        <div id="apps" class="section-title title-app">Herramientas y Apps 🛠️</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">🎨 Canva</div><h3>Canva Pro - 1 Mes</h3></div>
+                <div class="price-container"><span class="price-label">Mensual</span><div class="price">$6.500</div></div>
+                <button onclick="abrirModal('Canva Pro 1 Mes','6.500', 'emailCuenta')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">🤖 ChatGPT</div><h3>Plus GPT-4 - 1 Año</h3></div>
+                <div class="price-container"><span class="price-label">Anual</span><div class="price">$20.000</div></div>
+                <button onclick="abrirModal('ChatGPT 1 Año','20.000', 'emailCuenta')">Comprar</button>
+            </div>
+        </div>
+
+
+        <div id="ig-fol" class="section-title title-ig">Instagram Seguidores 📊</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">👤 Seguidores</div><h3>100 Seguidores</h3></div>
+                <div class="price-container"><span class="price-label">Pack</span><div class="price">$800</div></div>
+                <button onclick="abrirModal('100 Seg IG','800', 'linkPerfil')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">👤 Seguidores</div><h3>1,000 Seguidores</h3></div>
+                <div class="price-container"><span class="price-label">Pack SMM</span><div class="price">$3.500</div></div>
+                <button onclick="abrirModal('1k Seg IG','3.500', 'linkPerfil')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">👤 Seguidores</div><h3>10,000 Seguidores</h3></div>
+                <div class="price-container"><span class="price-label">Pack Pro</span><div class="price">$10.000</div></div>
+                <button onclick="abrirModal('10k Seg IG','10.000', 'linkPerfil')">Comprar</button>
+            </div>
+        </div>
+
+
+        <div id="ig-lik" class="section-title title-ig">Instagram Likes ❤️</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">❤️ Likes Reales</div><h3>100 Likes</h3></div>
+                <div class="price-container"><span class="price-label">Pack</span><div class="price">$500</div></div>
+                <button onclick="abrirModal('100 Likes IG','500', 'linkPost')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">❤️ Likes Reales</div><h3>1,000 Likes</h3></div>
+                <div class="price-container"><span class="price-label">Pack SMM</span><div class="price">$2.000</div></div>
+                <button onclick="abrirModal('1k Likes IG','2.000', 'linkPost')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">❤️ Likes Reales</div><h3>10,000 Likes</h3></div>
+                <div class="price-container"><span class="price-label">Pack Pro</span><div class="price">$10.000</div></div>
+                <button onclick="abrirModal('10k Likes IG','10.000', 'linkPost')">Comprar</button>
+            </div>
+        </div>
+
+
+        <div id="tiktok" class="section-title title-tt">TikTok Boosting 📈</div>
+        <div class="grid">
+            <div class="card">
+                <div><div class="category-tag">👤 Seguidores TikTok</div><h3>100 Seguidores</h3></div>
+                <div class="price-container"><span class="price-label">Pack</span><div class="price">$1.500</div></div>
+                <button onclick="abrirModal('100 Seg TikTok','1.500', 'tiktokUser')">Comprar</button>
+            </div>
+            <div class="card">
+                <div><div class="category-tag">👀 Vistas TikTok</div><h3>10,000 Vistas</h3></div>
+                <div class="price-contain
