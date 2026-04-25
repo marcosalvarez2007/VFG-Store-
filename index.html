@@ -18,7 +18,7 @@
             --gradient: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -28,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* --- BACKGROUND DECORATION --- */
         .bg-glow {
             position: fixed; top: 0; left: 50%; transform: translateX(-50%);
             width: 100vw; height: 100vh;
@@ -36,254 +35,174 @@
             z-index: -1; pointer-events: none;
         }
 
-        /* --- HEADER & LOGO --- */
-        header {
-            padding: 80px 20px 40px;
-            text-align: center;
-            animation: fadeIn 1s ease-out;
+        /* --- POPUP --- */
+        #popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: flex;
+            justify-content: center; align-items: center; z-index: 10000;
+            backdrop-filter: blur(10px);
         }
-
-        .logo-container {
-            position: relative; display: inline-block; margin-bottom: 25px;
+        .popup-box { position: relative; max-width: 400px; width: 90%; animation: slideUp 0.5s ease; }
+        .popup-box img { width: 100%; border-radius: 24px; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .cerrar-popup {
+            position: absolute; top: -15px; right: -15px; background: var(--accent); color: #000;
+            width: 35px; height: 35px; border-radius: 50%; display: flex; 
+            justify-content: center; align-items: center; cursor: pointer; font-weight: 800;
+            z-index: 10001; box-shadow: 0 0 15px var(--accent-glow); transition: 0.3s;
         }
+        .cerrar-popup:hover { transform: scale(1.1) rotate(90deg); }
 
+        /* --- HEADER --- */
+        header { padding: 60px 20px 30px; text-align: center; }
+        .logo-container { position: relative; display: inline-block; margin-bottom: 20px; }
         .logo-container img {
-            width: 140px; border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            padding: 10px; background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 130px; border-radius: 20px; border: 1px solid var(--glass-border);
+            padding: 8px; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
         }
+        header h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: var(--text-dim); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; }
 
-        .logo-container:hover img { transform: rotate(3deg) scale(1.05); border-color: var(--accent); }
-
-        header h1 {
-            font-size: 3rem; font-weight: 800; letter-spacing: -2px;
-            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        header p { color: var(--text-dim); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; }
-
-        /* --- NAV CATEGORIES --- */
+        /* --- NAVIGATION --- */
         .nav-scroll {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px);
-            padding: 15px 0; border-bottom: 1px solid var(--glass-border);
-            display: flex; justify-content: center; overflow-x: auto;
+            position: sticky; top: 0; z-index: 100; background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px); padding: 15px 0; border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: center; overflow-x: auto; gap: 10px;
         }
-
         .nav-scroll::-webkit-scrollbar { display: none; }
-
         .chip {
-            padding: 8px 18px; margin: 0 5px; border-radius: 50px;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            color: var(--text-dim); text-decoration: none; font-size: 0.8rem;
-            white-space: nowrap; transition: 0.3s; font-weight: 600;
+            padding: 8px 18px; border-radius: 50px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border); color: var(--text-dim); text-decoration: none;
+            font-size: 0.75rem; white-space: nowrap; transition: 0.3s; font-weight: 600;
         }
-
         .chip:hover { background: var(--accent); color: #000; border-color: var(--accent); }
 
         /* --- SECTIONS --- */
-        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-
-        .section-header {
-            margin: 80px 0 30px; display: flex; align-items: center; gap: 20px;
-        }
-
-        .section-header h2 { font-size: 1.8rem; font-weight: 700; color: var(--text-main); }
-
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section-header { margin: 60px 0 30px; display: flex; align-items: center; gap: 20px; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-main); white-space: nowrap; }
         .section-header .line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border) 0%, transparent 100%); }
 
-        /* --- PRODUCT CARDS --- */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;
-        }
-
+        /* --- GRID & CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
         .card {
             background: var(--card-bg); border: 1px solid var(--glass-border);
-            border-radius: 28px; padding: 30px; position: relative;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            display: flex; flex-direction: column; justify-content: space-between;
-            backdrop-filter: blur(10px);
+            border-radius: 24px; padding: 25px; transition: 0.4s;
+            display: flex; flex-direction: column; justify-content: space-between; backdrop-filter: blur(10px);
         }
-
-        .card:hover {
-            transform: translateY(-10px); border-color: rgba(0, 242, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
-        }
-
-        .tag {
-            font-size: 0.7rem; color: var(--accent); font-weight: 800;
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block;
-        }
-
-        .card h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; }
-
-        .price-box { margin-bottom: 25px; }
-        .price-box small { color: var(--text-dim); font-size: 0.8rem; }
-        .price-box .amt { font-size: 2rem; font-weight: 800; display: block; color: var(--text-main); }
-
+        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .tag { font-size: 0.65rem; color: var(--accent); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .card h3 { font-size: 1.1rem; margin-bottom: 15px; }
+        .price-box { margin-bottom: 20px; }
+        .price-box .amt { font-size: 1.6rem; font-weight: 800; color: #fff; display: block; }
         .buy-btn {
-            background: var(--text-main); color: #000; border: none;
-            padding: 14px; border-radius: 16px; font-weight: 700;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.85rem;
+            background: #fff; color: #000; border: none; padding: 12px;
+            border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%;
         }
-
         .buy-btn:hover { background: var(--accent); transform: scale(1.02); }
 
         /* --- MODAL --- */
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-            display: none; justify-content: center; align-items: center; z-index: 1000;
+            display: none; justify-content: center; align-items: center; z-index: 20000;
             backdrop-filter: blur(10px); padding: 20px;
         }
-
         .modal-content {
-            background: #0f0f0f; width: 100%; max-width: 450px;
-            padding: 40px; border-radius: 32px; border: 1px solid var(--glass-border);
+            background: #0f0f0f; width: 100%; max-width: 400px;
+            padding: 35px; border-radius: 28px; border: 1px solid var(--glass-border);
             position: relative; animation: slideUp 0.4s ease;
         }
-
-        .modal h3 { font-size: 1.8rem; margin-bottom: 10px; }
-        .modal p { color: var(--text-dim); margin-bottom: 30px; font-size: 0.9rem; }
-
+        .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; color: var(--text-dim); }
         input, select {
-            width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px;
-            background: #1a1a1a; border: 1px solid var(--glass-border);
-            color: #fff; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px;
+            background: #1a1a1a; border: 1px solid var(--glass-border); color: #fff; outline: none;
         }
-
-        input:focus { border-color: var(--accent); background: #222; }
-
         .confirm-btn {
-            width: 100%; padding: 16px; border-radius: 14px; border: none;
-            background: var(--gradient); color: #fff; font-weight: 700;
-            cursor: pointer; font-size: 1rem; margin-top: 10px;
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: var(--gradient); color: #fff; font-weight: 700; cursor: pointer;
         }
 
-        .close-modal { position: absolute; top: 25px; right: 25px; cursor: pointer; color: var(--text-dim); }
-
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: scale(0.9) translateY(40px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* --- FOOTER --- */
-        footer { padding: 80px 20px; text-align: center; border-top: 1px solid var(--glass-border); margin-top: 100px; }
-        footer p { color: var(--text-dim); font-size: 0.8rem; }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            .grid { grid-template-columns: 1fr; }
-        }
+        footer { padding: 60px 20px; text-align: center; border-top: 1px solid var(--glass-border); opacity: 0.5; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="bg-glow"></div>
 
+    <div id="popup">
+        <div class="popup-box">
+            <span class="cerrar-popup" onclick="cerrarPopup()">✕</span>
+            <img src="promo.jpg" alt="VFG Promo">
+        </div>
+    </div>
+
     <header>
         <div class="logo-container">
             <img src="logo.jpg" alt="VFG LOGO">
         </div>
         <h1>VFG STORE</h1>
-        <p>Digital Luxury Services</p>
+        <p>Servicios Digitales de Alta Calidad</p>
     </header>
 
     <nav class="nav-scroll">
-        <a href="#freefire" class="chip">Free Fire</a>
-        <a href="#robux" class="chip">Roblox</a>
+        <a href="#ff" class="chip">Free Fire</a>
+        <a href="#roblox" class="chip">Roblox</a>
         <a href="#streaming" class="chip">Streaming</a>
-        <a href="#instagram" class="chip">Instagram</a>
+        <a href="#ig" class="chip">Instagram</a>
         <a href="#tiktok" class="chip">TikTok</a>
         <a href="#youtube" class="chip">YouTube</a>
+        <a href="#wsp" class="chip">WhatsApp</a>
     </nav>
 
     <div class="container">
-
-        <section id="freefire">
-            <div class="section-header">
-                <h2>Free Fire 💎</h2>
-                <div class="line"></div>
-            </div>
+        
+        <section id="ff">
+            <div class="section-header"><h2>Free Fire 💎</h2><div class="line"></div></div>
             <div class="grid">
-                <div class="card">
-                    <div>
-                        <span class="tag">Top Up Directo</span>
-                        <h3>110 Diamantes</h3>
-                    </div>
-                    <div class="price-box">
-                        <small>Desde</small>
-                        <span class="amt">$1.500</span>
-                    </div>
-                    <button class="buy-btn" onclick="openStore('110 Diamantes FF', '1.500', 'ID de Jugador')">Adquirir</button>
-                </div>
-                <div class="card">
-                    <div>
-                        <span class="tag">Suscripción</span>
-                        <h3>Tarjeta Semanal</h3>
-                    </div>
-                    <div class="price-box">
-                        <small>Oferta</small>
-                        <span class="amt">$3.450</span>
-                    </div>
-                    <button class="buy-btn" onclick="openStore('Semanal FF', '3.450', 'ID de Jugador')">Adquirir</button>
-                </div>
+                <div class="card"><span class="tag">Directo</span><h3>110 Diamantes</h3><div class="price-box"><span class="amt">$1.500</span></div><button class="buy-btn" onclick="openStore('110 Diamantes FF', '1.500', 'ID de Jugador')">Adquirir</button></div>
+                <div class="card"><span class="tag">Suscripción</span><h3>Tarjeta Semanal</h3><div class="price-box"><span class="amt">$3.450</span></div><button class="buy-btn" onclick="openStore('Semanal FF', '3.450', 'ID de Jugador')">Adquirir</button></div>
             </div>
         </section>
 
-        <section id="robux">
-            <div class="section-header">
-                <h2>Roblox 🚀</h2>
-                <div class="line"></div>
-            </div>
+        <section id="roblox">
+            <div class="section-header"><h2>Roblox 🚀</h2><div class="line"></div></div>
             <div class="grid">
-                <div class="card">
-                    <div><span class="tag">Gamepass Method</span><h3>400 Robuxs</h3></div>
-                    <div class="price-box"><small>Precio</small><span class="amt">$5.000</span></div>
-                    <button class="buy-btn" onclick="openStore('400 Robux', '5.000', 'Usuario de Roblox')">Adquirir</button>
-                </div>
-                <div class="card">
-                    <div><span class="tag">Gamepass Method</span><h3>800 Robuxs</h3></div>
-                    <div class="price-box"><small>Precio</small><span class="amt">$9.000</span></div>
-                    <button class="buy-btn" onclick="openStore('800 Robux', '9.000', 'Usuario de Roblox')">Adquirir</button>
-                </div>
+                <div class="card"><span class="tag">Robux</span><h3>400 Robux</h3><div class="price-box"><span class="amt">$4.200</span></div><button class="buy-btn" onclick="openStore('400 Robux', '4.200', 'Usuario de Roblox')">Adquirir</button></div>
+                <div class="card"><span class="tag">Robux</span><h3>800 Robux</h3><div class="price-box"><span class="amt">$8.100</span></div><button class="buy-btn" onclick="openStore('800 Robux', '8.100', 'Usuario de Roblox')">Adquirir</button></div>
             </div>
         </section>
 
-        <section id="instagram">
-            <div class="section-header">
-                <h2>Instagram Pro 📈</h2>
-                <div class="line"></div>
-            </div>
+        <section id="ig">
+            <div class="section-header"><h2>Instagram 📊</h2><div class="line"></div></div>
             <div class="grid">
-                <div class="card">
-                    <div><span class="tag">Social Growth</span><h3>1.000 Seguidores</h3></div>
-                    <div class="price-box"><small>Real & HQ</small><span class="amt">$3.500</span></div>
-                    <button class="buy-btn" onclick="openStore('1k Seguidores IG', '3.500', 'Link del Perfil')">Adquirir</button>
-                </div>
-                <div class="card">
-                    <div><span class="tag">Social Growth</span><h3>1.000 Likes</h3></div>
-                    <div class="price-box"><small>Instantáneos</small><span class="amt">$2.000</span></div>
-                    <button class="buy-btn" onclick="openStore('1k Likes IG', '2.000', 'Link del Post')">Adquirir</button>
-                </div>
+                <div class="card"><span class="tag">Seguidores</span><h3>1.000 Seguidores</h3><div class="price-box"><span class="amt">$3.500</span></div><button class="buy-btn" onclick="openStore('1k Seguidores IG', '3.500', 'Link del Perfil')">Adquirir</button></div>
+                <div class="card"><span class="tag">Likes</span><h3>1.000 Likes</h3><div class="price-box"><span class="amt">$2.000</span></div><button class="buy-btn" onclick="openStore('1k Likes IG', '2.000', 'Link de la Foto')">Adquirir</button></div>
+                <div class="card"><span class="tag">Vistas</span><h3>10.000 Vistas</h3><div class="price-box"><span class="amt">$2.000</span></div><button class="buy-btn" onclick="openStore('10k Vistas IG', '2.000', 'Link del Video/Reel')">Adquirir</button></div>
             </div>
         </section>
 
-        <section id="streaming">
-            <div class="section-header">
-                <h2>Streaming 📺</h2>
-                <div class="line"></div>
-            </div>
+        <section id="tiktok">
+            <div class="section-header"><h2>TikTok 🚀</h2><div class="line"></div></div>
             <div class="grid">
-                <div class="card">
-                    <div><span class="tag">Netflix Premium</span><h3>Pantalla 4K Ultra</h3></div>
-                    <div class="price-box"><small>30 Días</small><span class="amt">$2.800</span></div>
-                    <button class="buy-btn" onclick="openStore('Netflix Pantalla', '2.800', 'Correo Contacto')">Adquirir</button>
-                </div>
-                <div class="card">
-                    <div><span class="tag">Herramientas</span><h3>Canva Pro Personal</h3></div>
-                    <div class="price-box"><small>Mensual</small><span class="amt">$6.500</span></div>
-                    <button class="buy-btn" onclick="openStore('Canva Pro', '6.500', 'Email de Cuenta')">Adquirir</button>
-                </div>
+                <div class="card"><span class="tag">Seguidores</span><h3>100 Seguidores</h3><div class="price-box"><span class="amt">$1.500</span></div><button class="buy-btn" onclick="openStore('100 Seg TikTok', '1.500', 'Usuario de TikTok')">Adquirir</button></div>
+                <div class="card"><span class="tag">Vistas</span><h3>10.000 Vistas</h3><div class="price-box"><span class="amt">$3.000</span></div><button class="buy-btn" onclick="openStore('10k Vistas TikTok', '3.000', 'Link del Video')">Adquirir</button></div>
+            </div>
+        </section>
+
+        <section id="youtube">
+            <div class="section-header"><h2>YouTube 🎥</h2><div class="line"></div></div>
+            <div class="grid">
+                <div class="card"><span class="tag">Subs</span><h3>100 Suscriptores</h3><div class="price-box"><span class="amt">$1.500</span></div><button class="buy-btn" onclick="openStore('100 Subs YT', '1.500', 'Link del Canal')">Adquirir</button></div>
+                <div class="card"><span class="tag">Likes</span><h3>1.000 Likes</h3><div class="price-box"><span class="amt">$3.000</span></div><button class="buy-btn" onclick="openStore('1k Likes YT', '3.000', 'Link del Video')">Adquirir</button></div>
+            </div>
+        </section>
+
+        <section id="wsp">
+            <div class="section-header"><h2>WhatsApp Canales 🟢</h2><div class="line"></div></div>
+            <div class="grid">
+                <div class="card"><span class="tag">Miembros</span><h3>100 Miembros</h3><div class="price-box"><span class="amt">$1.500</span></div><button class="buy-btn" onclick="openStore('100 Miembros Wsp', '1.500', 'Link del Canal')">Adquirir</button></div>
+                <div class="card"><span class="tag">Reacciones</span><h3>1.000 Reacciones</h3><div class="price-box"><span class="amt">$7.000</span></div><button class="buy-btn" onclick="openStore('1k Reacciones Wsp', '7.000', 'Link al Mensaje')">Adquirir</button></div>
             </div>
         </section>
 
@@ -293,34 +212,36 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeStore()">✕</span>
             <h3>Confirmar Pedido</h3>
-            <p id="productDesc"></p>
-            
+            <p id="productDesc" style="color:var(--text-dim); margin-bottom:20px;"></p>
             <input type="text" id="userInput" placeholder="Dato requerido">
-            
             <select id="paymentMethod">
-                <option value="">Selecciona Pago</option>
-                <option value="Transferencia">Transferencia (CBU)</option>
-                <option value="Mercado Pago">Mercado Pago</option>
-                <option value="Binance">Binance (USDT)</option>
+                <option value="">Método de Pago</option>
+                <option>Mercado Pago</option>
+                <option>Transferencia Bancaria</option>
+                <option>USDT (Binance)</option>
             </select>
-            
-            <button class="confirm-btn" onclick="processOrder()">Enviar vía WhatsApp</button>
+            <button class="confirm-btn" onclick="processOrder()">Enviar Pedido</button>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 VFG STORE. Todos los derechos reservados.</p>
-        <p style="margin-top: 10px; opacity: 0.5;">Desarrollado con estándares de alta calidad digital.</p>
+        <p>&copy; 2026 VFG STORE. Entrega inmediata y garantizada.</p>
     </footer>
 
     <script>
-        let currentProduct = "";
+        // Función corregida para el Popup
+        function cerrarPopup() {
+            const popup = document.getElementById("popup");
+            if(popup) popup.style.display = "none";
+        }
+
+        let currentProd = "";
         let currentPrice = "";
 
         function openStore(name, price, placeholder) {
-            currentProduct = name;
+            currentProd = name;
             currentPrice = price;
-            document.getElementById('productDesc').innerText = `${name} — $${price} ARS`;
+            document.getElementById('productDesc').innerText = name + " — $" + price;
             document.getElementById('userInput').placeholder = placeholder;
             document.getElementById('orderModal').style.display = 'flex';
         }
@@ -332,25 +253,17 @@
         function processOrder() {
             const data = document.getElementById('userInput').value;
             const method = document.getElementById('paymentMethod').value;
-            const label = document.getElementById('userInput').placeholder;
+            if(!data || !method) return alert("Completa los datos");
 
-            if(!data || !method) {
-                alert("Por favor, completa los datos.");
-                return;
-            }
+            const msg = `🚀 *NUEVO PEDIDO VFG STORE*\n\n` +
+                        `📦 *Producto:* ${currentProd}\n` +
+                        `💰 *Precio:* $${currentPrice}\n` +
+                        `👤 *Dato:* ${data}\n` +
+                        `💳 *Pago:* ${method}`;
 
-            const message = `🚀 *NUEVA ORDEN - VFG STORE*\n\n` +
-                            `📦 *Producto:* ${currentProduct}\n` +
-                            `💰 *Monto:* $${currentPrice}\n` +
-                            `👤 *${label}:* ${data}\n` +
-                            `💳 *Pago:* ${method}\n\n` +
-                            `_Enviado desde el portal oficial._`;
-
-            const phone = "5492984706726";
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://wa.me/5492984706726?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // Cerrar modal al clickear fuera
         window.onclick = function(e) {
             if (e.target == document.getElementById('orderModal')) closeStore();
         }
